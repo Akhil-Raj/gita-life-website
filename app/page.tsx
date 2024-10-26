@@ -220,7 +220,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="container mx-auto px-4 relative z-10">
           <blockquote className="text-white text-2xl italic text-center max-w-3xl mx-auto">
-            "You have the right to work, but never to the fruit of the work. You should never engage in action for the sake of Reward, nor should you long for Inaction."
+            &ldquo;You have the right to work, but never to the fruit of the work. You should never engage in action for the sake of Reward, nor should you long for Inaction.&rdquo;
           </blockquote>
           <p className="text-right mt-4 font-semibold text-white">- Krishna, BG 2.47</p>
         </div>

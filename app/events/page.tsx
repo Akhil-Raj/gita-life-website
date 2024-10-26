@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
 
 export default function Events() {

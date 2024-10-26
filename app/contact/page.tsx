@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { FaWhatsapp, FaPhone, FaMapMarkerAlt, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaWhatsapp, FaPhone, FaMapMarkerAlt, FaInstagram, FaYoutube, FaCalendarAlt, FaClock, FaInfoCircle } from 'react-icons/fa';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -38,7 +38,7 @@ export default function Contact() {
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch (_) {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
