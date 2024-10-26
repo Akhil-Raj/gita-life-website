@@ -61,8 +61,7 @@ export default function Home() {
               alt="Krishna and Arjuna at Kurukshetra"
               width={500}
               height={375}
-              objectFit="cover"
-              className="rounded-lg shadow-lg"
+              className="rounded-lg shadow-lg object-cover"
             />
           </div>
           <div className="md:w-1/2 md:pl-8">
@@ -109,9 +108,8 @@ export default function Home() {
                   <Image
                     src={offering.image}
                     alt={offering.title}
-                    layout="fill"
-                    objectFit="contain"
-                    className="absolute top-0 left-0 w-full h-full"
+                    fill
+                    className="absolute top-0 left-0 w-full h-full object-cover"
                   />
                 </div>
                 <div className="p-6">
