@@ -11,9 +11,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        saffron: "#d4a54e", // Added saffron color
       },
     },
   },
   plugins: [],
 };
+
 export default config;
