@@ -1,6 +1,12 @@
+"use client";
+
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
+import { useState } from 'react';
+import RegistrationForm from '../components/RegistrationForm';
 
 export default function Events() {
+  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="container mx-auto p-8">
@@ -18,6 +24,7 @@ export default function Events() {
                 time: "5:30pm-8:30pm",
                 location: "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
                 whatsappLink: "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
+                registrationLink: true,
               },
               {
                 date: "Saturday October 12th, 2024",
@@ -74,19 +81,27 @@ export default function Events() {
                     {event.description}
                   </p>
                   {event.whatsappLink && (
-                    <a href={event.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 font-semibold hover:underline">
+                    <a href={event.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 font-semibold hover:underline block mb-4">
                       Join WhatsApp Group
                     </a>
                   )}
                   {event.contact && (
-                    <p className="text-gray-700 mt-2">
+                    <p className="text-gray-700 mb-4">
                         <strong>Contact:{' '}
                         <a href={`tel:${event.contact.replace(/\D/g, '')}`} className="text-blue-600 hover:underline">
                         {event.contact}
                         </a>
                         </strong>
                     </p>
-                    )}
+                  )}
+                  {event.registrationLink && (
+                    <button
+                      onClick={() => setShowRegistrationForm(true)}
+                      className="bg-saffron text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg"
+                    >
+                      Register for Event
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -215,6 +230,10 @@ export default function Events() {
           </div>
         </section>
       </div>
+
+      {showRegistrationForm && (
+        <RegistrationForm onClose={() => setShowRegistrationForm(false)} />
+      )}
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">

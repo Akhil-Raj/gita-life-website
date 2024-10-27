@@ -18,18 +18,16 @@ export async function POST(req: Request) {
   try {
     // Send the email
     await transporter.sendMail({
-      from: `"Gita Life NYC Contact Form" <${process.env.SMTP_USER}>`,
-      to: process.env.CONTACT_EMAIL, // The email address where you want to receive the contact form submissions
-      subject: 'New Contact Form Submission',
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      html: `<p><strong>Name:</strong> ${name}</p>
-             <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Message:</strong> ${message}</p>`,
+      from: `"Event Registration" <${process.env.SMTP_USER}>`,
+      to: process.env.CONTACT_EMAIL, // The email address where you want to receive the registrations
+      subject: 'New Event Registration',
+      text: message,
+      html: message.replace(/\n/g, '<br>'),
     });
 
-    return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
+    return NextResponse.json({ message: 'Registration successful' }, { status: 200 });
   } catch (error) {
     console.error('Error sending email:', error);
-    return NextResponse.json({ message: 'Error sending email' }, { status: 500 });
+    return NextResponse.json({ message: 'Registration failed' }, { status: 500 });
   }
 }
