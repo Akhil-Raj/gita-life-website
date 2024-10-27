@@ -53,7 +53,7 @@ export default function Contact() {
         
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
           <p className="text-xl mb-6 text-center text-gray-600">
-            Questions or Comments? Interested in joining Us?
+            Seeking spiritual wisdom? Ready to explore the timeless teachings of the Bhagavad Gita?
           </p>
           
           <div className="flex justify-center items-center gap-8 mb-8">
