@@ -1,11 +1,29 @@
 "use client";
 
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RegistrationForm from '../components/RegistrationForm';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Events() {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Check for registration parameter in URL on component mount
+  useEffect(() => {
+    const register = searchParams.get('register');
+    if (register === 'true') {
+      setShowRegistrationForm(true);
+    }
+  }, [searchParams]);
+
+  const handleCloseForm = () => {
+    setShowRegistrationForm(false);
+    // Remove the register parameter from URL
+    router.replace('/events');
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -95,12 +113,12 @@ export default function Events() {
                     </p>
                   )}
                   {event.registrationLink && (
-                    <button
-                      onClick={() => setShowRegistrationForm(true)}
-                      className="bg-saffron text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg"
+                    <a
+                      href="/events?register=true"
+                      className="bg-saffron text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg inline-block text-center"
                     >
                       Register for Event
-                    </button>
+                    </a>
                   )}
                 </div>
               </div>
@@ -232,7 +250,7 @@ export default function Events() {
       </div>
 
       {showRegistrationForm && (
-        <RegistrationForm onClose={() => setShowRegistrationForm(false)} />
+        <RegistrationForm onClose={handleCloseForm} />
       )}
 
       {/* Footer */}
