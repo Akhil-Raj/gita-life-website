@@ -1,17 +1,17 @@
 "use client";
 
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import RegistrationForm from '../components/RegistrationForm';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
-export default function Events() {
+// Create a wrapper component that uses the hooks
+function EventsContent() {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Check for registration parameter in URL on component mount
   useEffect(() => {
     const register = searchParams.get('register');
     if (register === 'true') {
@@ -21,7 +21,6 @@ export default function Events() {
 
   const handleCloseForm = () => {
     setShowRegistrationForm(false);
-    // Remove the register parameter from URL
     router.replace('/events');
   };
 
@@ -261,5 +260,14 @@ export default function Events() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function Events() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EventsContent />
+    </Suspense>
   );
 }
