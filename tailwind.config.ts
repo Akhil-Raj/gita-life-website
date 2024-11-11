@@ -11,7 +11,22 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        saffron: "#d4a54e", // Added saffron color
+        saffron: "#d4a54e",
+      },
+      keyframes: {
+        fadeIn: {
+          from: {
+            opacity: '0',
+            transform: 'translateY(-1rem)'
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.3s ease-out',
       },
     },
   },
