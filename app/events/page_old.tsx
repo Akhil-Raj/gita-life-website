@@ -5,14 +5,34 @@ import { useState, useEffect, Suspense } from 'react';
 import RegistrationForm from '../components/RegistrationForm';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import EventInfoModal from '../components/EventInfoModal';
+
+// Add new InfoCard component at the top of the file
+function InfoCard({ info, onClose }) {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 max-w-md w-full m-4 relative">
+        <button 
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+        >
+          ×
+        </button>
+        <h3 className="text-xl font-semibold mb-4">{info.name}</h3>
+        <div className="text-gray-600">
+          {/* We'll populate this with actual info later */}
+          <p>Detailed information will be added here.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // Create a wrapper component that uses the hooks
 function EventsContent() {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [showEventInfo, setShowEventInfo] = useState(false);
+  const [selectedInfo, setSelectedInfo] = useState(null);
 
   useEffect(() => {
     const register = searchParams.get('register');
@@ -24,10 +44,6 @@ function EventsContent() {
   const handleCloseForm = () => {
     setShowRegistrationForm(false);
     router.replace('/events');
-  };
-
-  const handleCloseEventInfo = () => {
-    setShowEventInfo(false);
   };
 
   return (
@@ -43,46 +59,46 @@ function EventsContent() {
               {
                 date: "Saturday November 16th, 2024",
                 name: "Monthly Youth Festival (With Rasnath Das)",
-                description: "MORE INFO BOX",
+                description: "[STAY TUNED FOR MORE INFO]",
                 time: "5:30pm-8:30pm",
                 location: "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
                 whatsappLink: "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
                 registrationLink: true,
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday October 12th, 2024",
                 name: "Jersey City Weekly Program",
-                description: "[CONTACT FOR MORE INFO]",
+                description: "Topic covered : Increasing auspiciousness in our lives",
                 time: "12:30-2:30pm",
                 location: "3287, JFK Boulevard, Jersey City, NJ",
                 whatsappLink: "https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02",
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday October 12th, 2024",
                 name: "Harrison Weekly Program",
-                description: "[CONTACT FOR MORE INFO]",
+                description: "Topic covered : Arjuna's Weakness of Heart",
                 time: "3pm-5pm",
                 location: "600 FE, Rodgers Boulevard North. Harrison",
                 whatsappLink: "https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6",
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday October 12th, 2024",
                 name: "NYU Weekly Program",
-                description: "[CONTACT FOR MORE INFO]",
-                time: "6:30pm-9pm",
+                description: "Topic covered : Arjuna's Weakness of Heart",
+                time: "7pm-9pm",
                 location: "600 FE, Rodgers Boulevard North. Harrison",
                 contact: "+1 516 979 6593 (Akhil)",
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Sunday October 13th, 2024",
                 name: "Gita Class",
-                description: "[CONTACT FOR MORE INFO]",
+                description: "Verse(s) covered : Chapter 4, verses 35-38",
                 time: "6:50pm-8:30pm",
                 location: "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
                 whatsappLink: "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
               },
             ].map((event, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg transform-gpu transition-transform duration-300 hover:scale-105">
+              <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
                 <div className="bg-saffron text-white p-4">
                   <h3 className="text-xl font-semibold">{event.name}</h3>
                 </div>
@@ -99,23 +115,15 @@ function EventsContent() {
                     <FaMapMarkerAlt className="mr-2 text-saffron" />
                     {event.location}
                   </p>
-                  {event.description === "MORE INFO BOX" ? (
-                    <>
-                      <button
-                        onClick={() => setShowEventInfo(true)}
-                        className="bg-saffron text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors duration-300"
-                      >
-                        More Info
-                      </button>
-                      
-                      {showEventInfo && <EventInfoModal onClose={handleCloseEventInfo} />}
-                    </>
-                  ) : (
-                    <p className="text-gray-700 mb-4">
-                      <FaInfoCircle className="inline-block mr-2 text-saffron" />
-                      {event.description}
-                    </p>
-                  )}
+                  <p className="text-gray-700 mb-4">
+                    <button 
+                      onClick={() => setSelectedInfo(event)}
+                      className="inline-flex items-center text-saffron hover:text-orange-600"
+                    >
+                      <FaInfoCircle className="mr-2" />
+                      More Information
+                    </button>
+                  </p>
                   {event.whatsappLink && (
                     <a href={event.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 font-semibold hover:underline block mb-4">
                       Join WhatsApp Group
@@ -177,7 +185,7 @@ function EventsContent() {
                 whatsappLink: "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg"
               },
             ].map((event, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg transform-gpu transition-transform duration-300 hover:scale-105">
+              <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
                 <div className="bg-saffron text-white p-4">
                   <h3 className="text-xl font-semibold">{event.name}</h3>
                 </div>
@@ -195,8 +203,13 @@ function EventsContent() {
                     {event.location}
                   </p>
                   <p className="text-gray-700">
-                    <FaInfoCircle className="inline-block mr-2 text-saffron" />
-                    {event.description}
+                    <button 
+                      onClick={() => setSelectedInfo(event)}
+                      className="inline-flex items-center text-saffron hover:text-orange-600"
+                    >
+                      <FaInfoCircle className="mr-2" />
+                      More Information
+                    </button>
                   </p>
                   {event.whatsappLinks && (
                     <div className="mt-4">
@@ -231,7 +244,7 @@ function EventsContent() {
         {/* Monthly Events */}
         <section className="mb-16">
           <h2 className="text-3xl font-semibold mb-6 text-gray-800">Monthly Events</h2>
-          <div className="bg-white rounded-lg shadow-lg transform-gpu transition-transform duration-300 hover:scale-105">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
             <div className="bg-saffron text-white p-4">
               <h3 className="text-xl font-semibold">Monthly Youth Festival</h3>
             </div>
@@ -249,8 +262,13 @@ function EventsContent() {
                 Iskcon NYC, New Jersey, Harrison City
               </p>
               <p className="text-gray-700 mb-4">
-                <FaInfoCircle className="inline-block mr-2 text-saffron" />
-                Gita Life NYC's flagship event featuring:
+                <button 
+                  onClick={() => setSelectedInfo(event)}
+                  className="inline-flex items-center text-saffron hover:text-orange-600"
+                >
+                  <FaInfoCircle className="mr-2" />
+                  More Information
+                </button>
               </p>
               <ul className="list-disc list-inside text-gray-600 mb-4 ml-4">
                 <li>Darshan Aarti🪔</li>
@@ -278,6 +296,13 @@ function EventsContent() {
           <p className="text-sm text-gray-400">Copyright © 2024 GitaLifeNYC - All Rights Reserved.</p>
         </div>
       </footer>
+
+      {selectedInfo && (
+        <InfoCard 
+          info={selectedInfo} 
+          onClose={() => setSelectedInfo(null)} 
+        />
+      )}
     </div>
   );
 }
