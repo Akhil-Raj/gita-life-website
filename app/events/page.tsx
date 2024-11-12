@@ -16,8 +16,13 @@ function EventsContent() {
 
   useEffect(() => {
     const register = searchParams.get('register');
+    const info = searchParams.get('info');
+    
     if (register === 'true') {
       setShowRegistrationForm(true);
+    }
+    if (info === 'true') {
+      setShowEventInfo(true);
     }
   }, [searchParams]);
 
@@ -28,6 +33,7 @@ function EventsContent() {
 
   const handleCloseEventInfo = () => {
     setShowEventInfo(false);
+    router.replace('/events');
   };
 
   return (
@@ -102,7 +108,10 @@ function EventsContent() {
                   {event.description === "MORE INFO BOX" ? (
                     <>
                       <button
-                        onClick={() => setShowEventInfo(true)}
+                        onClick={() => {
+                          router.replace('/events?info=true');
+                          setShowEventInfo(true);
+                        }}
                         className="bg-saffron text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors duration-300"
                       >
                         More Info
