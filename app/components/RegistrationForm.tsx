@@ -37,7 +37,7 @@ export default function RegistrationForm({ onClose }: RegistrationFormProps) {
     whatsappExtension: '+91',
     whatsappNumber: '',
     schoolOrganization: '',
-    contactExtension: '+91',
+    contactExtension: '+1',
     contactNumber: '',
     isWhatsappSameAsContact: false,
   });
@@ -327,7 +327,7 @@ export default function RegistrationForm({ onClose }: RegistrationFormProps) {
               {!formData.isWhatsappSameAsContact && (
                 <div>
                   <label htmlFor="contactNumber" className="block mb-2 text-gray-800 font-medium">
-                    Contact Number <span className="text-red-500">*</span>
+                    Contact Number / Alternate Number <span className="text-red-500">*</span>
                   </label>
                   <div className="flex gap-3">
                     <select
