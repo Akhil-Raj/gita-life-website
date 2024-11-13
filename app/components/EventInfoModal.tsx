@@ -55,29 +55,69 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
             {/* Content Section */}
             <div className="p-8 bg-white">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Monthly Youth Festival</h2>
-              <div className="text-gray-700 space-y-4 whitespace-pre-wrap">
-                {`Being away from home can create stress and anxiety, especially when combined with the academic pressure.
+              <div className="text-gray-700 space-y-6">
+                {/* Main Description */}
+                <div className="text-lg">
+                  Being away from home can create stress and anxiety, especially when combined with the academic pressure.
 
-To overcome this, it's helpful to connect with like-minded people to tackle this anxiety together.
+                  To overcome this, it's helpful to connect with like-minded people to tackle this anxiety together.
 
-But how should we do that? 🤔
+                  But how should we do that? 🤔
 
-DO NOT WORRY!! 😌
+                  DO NOT WORRY!! 😌
+                </div>
 
-Gita Life NYC is inviting you to join students, graduates, and working professionals at our Monthly Youth Festival 🥳
+                {/* Event Invitation */}
+                <div className="text-center font-medium text-xl">
+                  Gita Life NYC is inviting you to join students, graduates, and working professionals at our Monthly Youth Festival 🥳
+                </div>
 
-What's in it for you?
-✨ SPECIAL EVENT 🪩
-🎤 ENLIGHTENING TALK
-🎶 ECSTATIC KIRTAN🪘
-🍛 PRASADAM FEAST 🥗
+                {/* What's Included Section */}
+                <div className="bg-orange-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold mb-4">What's in it for you? ✨</h3>
+                  <div className="grid grid-cols-2 gap-4 text-lg">
+                    <div className="flex items-center gap-2">🪩 SPECIAL EVENT</div>
+                    <div className="flex items-center gap-2">🎤 ENLIGHTENING TALK</div>
+                    <div className="flex items-center gap-2">🎶 ECSTATIC KIRTAN</div>
+                    <div className="flex items-center gap-2">🍛 PRASADAM FEAST</div>
+                  </div>
+                </div>
 
-🗓 Date: Nov 16, 2024 (Saturday)
-⏰ Time: 5:30 PM onwards
+                {/* Date and Time */}
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <div className="flex justify-center gap-12 text-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🗓</span>
+                      <div>
+                        <div className="font-semibold">Date</div>
+                        <div>Nov 16, 2024 (Saturday)</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">⏰</span>
+                      <div>
+                        <div className="font-semibold">Time</div>
+                        <div>5:30 PM onwards</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-Don't hesitate! 🤔🤔 Register now and embrace the opportunity to connect, learn, and grow!
+                {/* Call to Action */}
+                <div className="text-center text-lg font-medium">
+                  Don't hesitate! Register now and embrace the opportunity to connect, learn, and grow! 
+                  <div className="mt-2">See you soon! 🌟</div>
+                </div>
 
-See you soon! 🌟`}
+                {/* Important Notes */}
+                <div className="bg-blue-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold mb-4">Important Notes ℹ️</h3>
+                  <ul className="space-y-3 list-disc list-inside text-gray-700">
+                    <li>This event is only for boys aged 18-30</li>
+                    <li>All registered participants will be issued a wrist band which is mandatory for special feast dinner. The deadline for receiving the wrist band is 7 pm Saturday. This is done to have the feast served exclusively for the MYF participants.</li>
+                    <li>If participants do not have wrist band or they fail to register, a donation of $5 will be collected for Prasadam.</li>
+                  </ul>
+                </div>
               </div>
 
               {/* Registration Button */}
