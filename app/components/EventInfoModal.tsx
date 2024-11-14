@@ -115,7 +115,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                   <ul className="space-y-3 list-disc list-inside text-gray-700">
                     <li>This event is only for boys aged 18-30</li>
                     <li>All registered participants will be issued a wrist band which is mandatory for special feast dinner. The deadline for receiving the wrist band is 7 pm Saturday. This is done to have the feast served exclusively for the MYF participants.</li>
-                    <li>If participants do not have wrist band or they fail to register, a donation of $5 will be collected for Prasadam.</li>
+                    <li>If participants do not have wrist band or they fail to register, a donation of $10 will be collected for Prasadam.</li>
                   </ul>
                 </div>
               </div>
