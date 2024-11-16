@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 
 const LoginPage = () => {
@@ -9,12 +9,61 @@ const LoginPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState('idle');
+    const [names, setNames] = useState<string[]>([]);
+    const [filteredNames, setFilteredNames] = useState<string[]>([]);
+    const [selectedName, setSelectedName] = useState<string>('');
+
+    useEffect(() => {
+        const fetchNames = async () => {
+            const response = await fetch('/api/get-names');
+            if (response.ok) {
+                const data = await response.json();
+                setNames(data.names);
+                setFilteredNames(data.names);
+            }
+        };
+        fetchNames();
+
+        // Check for username and password in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const usernameFromUrl = urlParams.get('username');
+        const passwordFromUrl = urlParams.get('password');
+
+        if (usernameFromUrl && passwordFromUrl) {
+            setUsername(usernameFromUrl);
+            setPassword(passwordFromUrl);
+            // Call a separate function to handle login after state is set
+            handleLogin(usernameFromUrl, passwordFromUrl);
+        }
+    }, []);
+
+    // New useEffect to log username and password when they change
+    useEffect(() => {
+        console.log("USERNAMEEE : ", username, "PASSWORDDD : ", password);
+    }, [username, password]); // This will run whenever username or password changes
+
+    const handleLogin = async (username: string, password: string) => {
+        // Simulate a form event
+        const event = {
+            preventDefault: () => {},
+            currentTarget: {} as HTMLFormElement,
+            target: {} as HTMLFormElement,
+        } as unknown as React.FormEvent;
+
+        await handleSubmit(event);
+    };
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSelectedName(value);
+        setFilteredNames(names.filter(name => name.toLowerCase().startsWith(value.toLowerCase())));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitStatus('idle');
-
+        console.log("USERNAME : ", username, "PASSWORD : ", password)
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -49,33 +98,45 @@ const LoginPage = () => {
     const handleAttendanceSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/attendance', {
+            const response = await fetch('/api/get-names', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Fetched names:', data.names);
+            } else {
+                console.error('Failed to fetch names:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching names:', error);
+        }
+    };
+
+    const handleMarkAttendance = async () => {
+        try {
+            const response = await fetch('/api/mark-present', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ name: selectedName }),
             });
 
+            const data = await response.json();
             if (response.ok) {
-                console.log('Registration successful');
-                // Delay the close action to allow the notification to be visible
-                setTimeout(() => {
-                }, 2000); // Wait 2 seconds before closing
+                alert(data.message);
             } else {
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.includes("application/json")) {
-                    const errorData = await response.json();
-                    console.error('Registration failed:', errorData);
-                } else {
-                    console.error('Registration failed: Unexpected response format');
-                }
+                alert('Error: ' + data.message);
             }
         } catch (error) {
-            console.error('Error submitting form:', error);
+            console.error('Error marking attendance:', error);
+            alert('Failed to mark attendance');
         }
     };
-
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
@@ -146,12 +207,31 @@ const LoginPage = () => {
                                     type="text"
                                     id="name"
                                     name="name"
+                                    value={selectedName}
+                                    onChange={handleNameChange}
                                     className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
                                     required
                                 />
+                                {filteredNames.length > 0 && (
+                                    <ul className="absolute bg-white border border-gray-300 mt-1 max-h-60 overflow-auto">
+                                        {filteredNames.map((name, index) => (
+                                            <li
+                                                key={index}
+                                                onClick={() => {
+                                                    setSelectedName(name);
+                                                    setFilteredNames([]);
+                                                }}
+                                                className="p-2 hover:bg-gray-200 cursor-pointer"
+                                            >
+                                                {name}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </div>
                             <button
                                 type="submit"
+                                onClick={handleMarkAttendance}
                                 className="w-full bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition duration-300"
                             >
                                 Mark Attendance

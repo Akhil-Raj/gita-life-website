@@ -4,8 +4,8 @@ import fs from 'fs';
 import path from 'path';
 
 // Define the path to the credentials file
-const credentialsPath = path.join(__dirname, '..', '..', 'credentials', 'festive-bloom-441900-t2-bcdcc0713c43.json');
-console.log('hello')
+const credentialsPath = path.join('/Users/shabad/Downloads/gita-life-website/credentials/festive-bloom-441900-t2-bcdcc0713c43.json');
+console.log("credentialsPath : ", credentialsPath)
 // Check if the credentials file exists
 if (!fs.existsSync(credentialsPath)) {
   throw new Error('Google Sheets credentials file does not exist at the specified path');
