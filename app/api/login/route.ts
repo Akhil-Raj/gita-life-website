@@ -5,7 +5,7 @@ export async function POST(request: Request) {
 
     // Example: Hardcoded credentials for demonstration
     const validUsername = 'admin';
-    const validPassword = 'password123';
+    const validPassword = 'h@reKr!$hn@108';
 
     if (username === validUsername && password === validPassword) {
         return NextResponse.json({ message: 'Login successful' }, { status: 200 });

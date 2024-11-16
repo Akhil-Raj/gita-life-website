@@ -76,7 +76,7 @@ function EventsContent() {
                 name: "NYU Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "6:30pm-9pm",
-                location: "600 FE, Rodgers Boulevard North. Harrison",
+                location: "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
                 contact: "+1 516 979 6593 (Akhil)",
               },
               {

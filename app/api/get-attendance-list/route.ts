@@ -3,26 +3,17 @@ import { google } from 'googleapis';
 import fs from 'fs';
 import path from 'path';
 
-// Define the path to the credentials file
-const credentialsPath = path.join('/Users/shabad/Downloads/gita-life-website/credentials/festive-bloom-441900-t2-bcdcc0713c43.json');
-console.log("credentialsPath : ", credentialsPath)
-// Check if the credentials file exists
-if (!fs.existsSync(credentialsPath)) {
-  throw new Error('Google Sheets credentials file does not exist at the specified path');
-}
-
 export async function GET(req: Request) {
   try {
-    // Read and parse the credentials from the JSON file
+    // Parse credentials and handle private key
     let credentials;
     try {
-      const credentialsFile = fs.readFileSync(credentialsPath, 'utf8');
-      credentials = JSON.parse(credentialsFile);
+      credentials = JSON.parse(process.env.GOOGLE_SHEETS_CREDENTIALS!);
       // Replace escaped newlines with actual newlines
       credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
     } catch (error) {
-      console.error('Error reading or parsing Google Sheets credentials:', error);
-      throw new Error('Invalid Google Sheets credentials format');
+      console.error('Error parsing Google Sheets credentials:', error);
+      throw new Error('Invalid GOOGLE_SHEETS_CREDENTIALS format');
     }
 
     // Initialize auth with properly formatted credentials
@@ -42,14 +33,35 @@ export async function GET(req: Request) {
     const rows = response.data.values || [];
     const headers = rows[0] || [];
     
-    // Find index for the "Name" column
+    // Find indices for both Name and Contact columns
     const nameIndex = headers.findIndex(header => header === 'Name');
+    const contactIndex = headers.findIndex(header => header === 'Contact');
+    
     if (nameIndex === -1) throw new Error('"Name" column not found');
+    if (contactIndex === -1) throw new Error('"Contact" column not found');
 
-    // Extract names from the "Name" column
-    const names = rows.slice(1).map(row => row[nameIndex]).filter(name => name);
+    // Extract names and contact numbers, process them together
+    const namesWithContacts = rows.slice(1)
+      .map(row => {
+        const name = row[nameIndex];
+        const contact = row[contactIndex];
+        
+        if (!name) return null;
 
-    return NextResponse.json({ names }, { status: 200 });
+        // Process contact numbers (split by ',' or '/')
+        const contactNumbers = contact ? contact.split(/[,/]/)
+          .map((num: string) => num.trim())
+          .map((num: string) => num.slice(-4))
+          .filter((num: string) => num) : [];
+
+        return {
+          name,
+          contactNumbers
+        };
+      })
+      .filter(entry => entry !== null);
+
+    return NextResponse.json({ entries: namesWithContacts }, { status: 200 });
   } catch (error) {
     console.error('Error fetching names:', error);
     return NextResponse.json({ message: 'Failed to fetch names' }, { status: 500 });

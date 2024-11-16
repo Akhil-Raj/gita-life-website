@@ -20,7 +20,8 @@ export async function POST(req: Request) {
       schoolOrganization,
       contactExtension,
       contactNumber,
-      isWhatsappSameAsContact
+      isWhatsappSameAsContact,
+      isAttendancePage
     } = body;
 
     // Format phone numbers with country code and wrap in single quotes to force text format
@@ -104,10 +105,13 @@ export async function POST(req: Request) {
       }
     }
 
+    // Use 'Present' instead of 'Registered' when coming from attendance page
+    const status = isAttendancePage ? 'Present' : 'Registered';
+
     if (existingRowIndex !== -1) {
-      // Case 1: Number exists, only update the "Nov MYF" column
+      // Case 1: Number exists, update the "Nov MYF" column
       const targetColumn = getColumnLetter(novMYFIndex);
-      const rowNumber = existingRowIndex + 1; // Convert to 1-based index
+      const rowNumber = existingRowIndex + 1;
 
       // Copy data validation and set "Registered" value
       await sheets.spreadsheets.batchUpdate({
@@ -142,7 +146,7 @@ export async function POST(req: Request) {
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [['Registered']],
+          values: [[status]],
         },
       });
 
@@ -209,7 +213,7 @@ export async function POST(req: Request) {
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [['Registered']],
+          values: [[status]],
         },
       });
     }

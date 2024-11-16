@@ -2,24 +2,26 @@
 
 import React, { useState, useEffect } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
+import RegistrationForm from '../components/RegistrationForm';
 
-const LoginPage = () => {
+const LoginAndAttendancePage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState('idle');
-    const [names, setNames] = useState<string[]>([]);
-    const [filteredNames, setFilteredNames] = useState<string[]>([]);
+    const [entries, setEntries] = useState<Array<{ name: string, contactNumbers: string[] }>>([]);
+    const [filteredEntries, setFilteredEntries] = useState<Array<{ name: string, contactNumbers: string[] }>>([]);
     const [selectedName, setSelectedName] = useState<string>('');
+    const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+    const [showRegistrationForm, setShowRegistrationForm] = useState(false);
 
     useEffect(() => {
         const fetchNames = async () => {
-            const response = await fetch('/api/get-names');
+            const response = await fetch('/api/get-attendance-list');
             if (response.ok) {
                 const data = await response.json();
-                setNames(data.names);
-                setFilteredNames(data.names);
+                setEntries(data.entries);
             }
         };
         fetchNames();
@@ -32,14 +34,12 @@ const LoginPage = () => {
         if (usernameFromUrl && passwordFromUrl) {
             setUsername(usernameFromUrl);
             setPassword(passwordFromUrl);
-            // Call a separate function to handle login after state is set
             handleLogin(usernameFromUrl, passwordFromUrl);
         }
     }, []);
 
     // New useEffect to log username and password when they change
     useEffect(() => {
-        console.log("USERNAMEEE : ", username, "PASSWORDDD : ", password);
     }, [username, password]); // This will run whenever username or password changes
 
     const handleLogin = async (username: string, password: string) => {
@@ -56,14 +56,15 @@ const LoginPage = () => {
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSelectedName(value);
-        setFilteredNames(names.filter(name => name.toLowerCase().startsWith(value.toLowerCase())));
+        setFilteredEntries(entries.filter(entry => 
+            entry.name.toLowerCase().startsWith(value.toLowerCase())
+        ));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitStatus('idle');
-        console.log("USERNAME : ", username, "PASSWORD : ", password)
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -98,7 +99,7 @@ const LoginPage = () => {
     const handleAttendanceSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/get-names', {
+            const response = await fetch('/api/get-attendance-list', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -107,12 +108,12 @@ const LoginPage = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Fetched names:', data.names);
+                console.log('Fetched attendance list:', data.entries);
             } else {
-                console.error('Failed to fetch names:', response.statusText);
+                console.error('Failed to fetch attendance list:', response.statusText);
             }
         } catch (error) {
-            console.error('Error fetching names:', error);
+            console.error('Error fetching attendance list:', error);
         }
     };
 
@@ -128,20 +129,40 @@ const LoginPage = () => {
 
             const data = await response.json();
             if (response.ok) {
-                alert(data.message);
+                setNotification({ message: data.message, type: 'success' });
+                setSelectedName(''); // Clear the name field
             } else {
-                alert('Error: ' + data.message);
+                setNotification({ message: 'Error: ' + data.message, type: 'error' });
             }
         } catch (error) {
             console.error('Error marking attendance:', error);
-            alert('Failed to mark attendance');
+            setNotification({ message: 'Failed to mark attendance', type: 'error' });
         }
+
+        // Clear notification after 3 seconds
+        setTimeout(() => {
+            setNotification(null);
+        }, 3000);
+    };
+
+    const handleBlur = () => {
+        // Use setTimeout to allow click events on the dropdown to fire first
+        setTimeout(() => {
+            setFilteredEntries([]);
+        }, 200);
     };
 
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
             <main className="flex-grow container mx-auto p-8 flex items-center justify-center">
                 <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+                    {notification && (
+                        <div className={`mb-4 p-3 rounded ${
+                            notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                        }`}>
+                            {notification.message}
+                        </div>
+                    )}
                     <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Login</h1>
                     
                     {!isLoggedIn ? (
@@ -199,50 +220,71 @@ const LoginPage = () => {
                             )}
                         </form>
                     ) : (
-                        <form className="space-y-6" onSubmit={handleAttendanceSubmit}>
-                            <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Mark Attendance</h2>
-                            <div>
-                                <label htmlFor="name" className="block mb-2 text-gray-700">Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={selectedName}
-                                    onChange={handleNameChange}
-                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
-                                    required
-                                />
-                                {filteredNames.length > 0 && (
-                                    <ul className="absolute bg-white border border-gray-300 mt-1 max-h-60 overflow-auto">
-                                        {filteredNames.map((name, index) => (
-                                            <li
-                                                key={index}
-                                                onClick={() => {
-                                                    setSelectedName(name);
-                                                    setFilteredNames([]);
-                                                }}
-                                                className="p-2 hover:bg-gray-200 cursor-pointer"
-                                            >
-                                                {name}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </div>
+                        <>
+                            <form className="space-y-6" onSubmit={handleAttendanceSubmit}>
+                                <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Mark Attendance</h2>
+                                <div>
+                                    <label htmlFor="name" className="block mb-2 text-gray-700">Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={selectedName}
+                                        onChange={handleNameChange}
+                                        onBlur={handleBlur}
+                                        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
+                                        required
+                                    />
+                                    {filteredEntries.length > 0 && (
+                                        <ul className="absolute bg-white border border-gray-300 mt-1 max-h-60 overflow-auto w-full z-10">
+                                            {filteredEntries.map((entry, index) => (
+                                                <li
+                                                    key={index}
+                                                    onClick={() => {
+                                                        setSelectedName(entry.name);
+                                                        setFilteredEntries([]);
+                                                    }}
+                                                    className="p-2 hover:bg-gray-200 cursor-pointer text-gray-900"
+                                                >
+                                                    <span className="font-medium">{entry.name}</span>
+                                                    {entry.contactNumbers.length > 0 && (
+                                                        <span className="text-gray-500 text-sm ml-2">
+                                                            ({entry.contactNumbers.join(', ')})
+                                                        </span>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                                <button
+                                    type="submit"
+                                    onClick={handleMarkAttendance}
+                                    className="w-full bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition duration-300"
+                                >
+                                    Mark Attendance
+                                </button>
+                            </form>
+
                             <button
-                                type="submit"
-                                onClick={handleMarkAttendance}
-                                className="w-full bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition duration-300"
+                                onClick={() => setShowRegistrationForm(true)}
+                                className="w-full mt-4 bg-saffron text-white px-6 py-2 rounded hover:bg-orange-600 transition duration-300"
                             >
-                                Mark Attendance
+                                Register New User
                             </button>
-                        </form>
+                        </>
                     )}
                 </div>
             </main>
-            // ... existing footer ...
+
+            {showRegistrationForm && (
+                <RegistrationForm 
+                    onClose={() => setShowRegistrationForm(false)} 
+                    isAttendancePage={true}
+                />
+            )}
         </div>
     );
 };
 
-export default LoginPage;
+export default LoginAndAttendancePage;
