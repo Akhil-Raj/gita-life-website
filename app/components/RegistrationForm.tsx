@@ -31,6 +31,125 @@ interface Notification {
   type: 'success' | 'error';
 }
 
+// Add this constant at the top of the file, after the interfaces
+const COUNTRY_CODES = [
+  // Current preferred options
+  { code: '+91', country: 'India' },
+  { code: '+1', country: 'USA' },
+  { code: '+44', country: 'UK' },
+  
+  // Other major ISKCON-connected countries
+  { code: '+61', country: 'Australia' },
+  { code: '+880', country: 'Bangladesh' },
+  { code: '+55', country: 'Brazil' },
+  { code: '+1', country: 'Canada' },
+  { code: '+86', country: 'China' },
+  { code: '+49', country: 'Germany' },
+  { code: '+62', country: 'Indonesia' },
+  { code: '+39', country: 'Italy' },
+  { code: '+81', country: 'Japan' },
+  { code: '+60', country: 'Malaysia' },
+  { code: '+230', country: 'Mauritius' },
+  { code: '+52', country: 'Mexico' },
+  { code: '+977', country: 'Nepal' },
+  { code: '+31', country: 'Netherlands' },
+  { code: '+64', country: 'New Zealand' },
+  { code: '+63', country: 'Philippines' },
+  { code: '+48', country: 'Poland' },
+  { code: '+7', country: 'Russia' },
+  { code: '+65', country: 'Singapore' },
+  { code: '+27', country: 'South Africa' },
+  { code: '+82', country: 'South Korea' },
+  { code: '+94', country: 'Sri Lanka' },
+  { code: '+46', country: 'Sweden' },
+  { code: '+66', country: 'Thailand' },
+  { code: '+380', country: 'Ukraine' },
+  
+  // Rest of the world (alphabetically)
+  { code: '+93', country: 'Afghanistan' },
+  { code: '+355', country: 'Albania' },
+  { code: '+213', country: 'Algeria' },
+  { code: '+376', country: 'Andorra' },
+  { code: '+244', country: 'Angola' },
+  { code: '+54', country: 'Argentina' },
+  { code: '+374', country: 'Armenia' },
+  { code: '+43', country: 'Austria' },
+  { code: '+973', country: 'Bahrain' },
+  { code: '+32', country: 'Belgium' },
+  { code: '+975', country: 'Bhutan' },
+  { code: '+591', country: 'Bolivia' },
+  { code: '+387', country: 'Bosnia' },
+  { code: '+267', country: 'Botswana' },
+  { code: '+359', country: 'Bulgaria' },
+  { code: '+855', country: 'Cambodia' },
+  { code: '+237', country: 'Cameroon' },
+  { code: '+56', country: 'Chile' },
+  { code: '+57', country: 'Colombia' },
+  { code: '+506', country: 'Costa Rica' },
+  { code: '+385', country: 'Croatia' },
+  { code: '+357', country: 'Cyprus' },
+  { code: '+420', country: 'Czech Republic' },
+  { code: '+45', country: 'Denmark' },
+  { code: '+593', country: 'Ecuador' },
+  { code: '+20', country: 'Egypt' },
+  { code: '+503', country: 'El Salvador' },
+  { code: '+372', country: 'Estonia' },
+  { code: '+251', country: 'Ethiopia' },
+  { code: '+679', country: 'Fiji' },
+  { code: '+358', country: 'Finland' },
+  { code: '+33', country: 'France' },
+  { code: '+995', country: 'Georgia' },
+  { code: '+233', country: 'Ghana' },
+  { code: '+30', country: 'Greece' },
+  { code: '+502', country: 'Guatemala' },
+  { code: '+852', country: 'Hong Kong' },
+  { code: '+36', country: 'Hungary' },
+  { code: '+354', country: 'Iceland' },
+  { code: '+353', country: 'Ireland' },
+  { code: '+972', country: 'Israel' },
+  { code: '+962', country: 'Jordan' },
+  { code: '+254', country: 'Kenya' },
+  { code: '+965', country: 'Kuwait' },
+  { code: '+856', country: 'Laos' },
+  { code: '+371', country: 'Latvia' },
+  { code: '+961', country: 'Lebanon' },
+  { code: '+370', country: 'Lithuania' },
+  { code: '+352', country: 'Luxembourg' },
+  { code: '+389', country: 'Macedonia' },
+  { code: '+356', country: 'Malta' },
+  { code: '+377', country: 'Monaco' },
+  { code: '+976', country: 'Mongolia' },
+  { code: '+212', country: 'Morocco' },
+  { code: '+95', country: 'Myanmar' },
+  { code: '+264', country: 'Namibia' },
+  { code: '+47', country: 'Norway' },
+  { code: '+968', country: 'Oman' },
+  { code: '+92', country: 'Pakistan' },
+  { code: '+507', country: 'Panama' },
+  { code: '+595', country: 'Paraguay' },
+  { code: '+51', country: 'Peru' },
+  { code: '+351', country: 'Portugal' },
+  { code: '+974', country: 'Qatar' },
+  { code: '+40', country: 'Romania' },
+  { code: '+966', country: 'Saudi Arabia' },
+  { code: '+381', country: 'Serbia' },
+  { code: '+421', country: 'Slovakia' },
+  { code: '+386', country: 'Slovenia' },
+  { code: '+34', country: 'Spain' },
+  { code: '+41', country: 'Switzerland' },
+  { code: '+886', country: 'Taiwan' },
+  { code: '+255', country: 'Tanzania' },
+  { code: '+216', country: 'Tunisia' },
+  { code: '+90', country: 'Turkey' },
+  { code: '+971', country: 'UAE' },
+  { code: '+598', country: 'Uruguay' },
+  { code: '+58', country: 'Venezuela' },
+  { code: '+84', country: 'Vietnam' },
+  { code: '+967', country: 'Yemen' },
+  { code: '+260', country: 'Zambia' },
+  { code: '+263', country: 'Zimbabwe' }
+];
+
 export default function RegistrationForm({ onClose, isAttendancePage = false }: RegistrationFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -300,9 +419,11 @@ export default function RegistrationForm({ onClose, isAttendancePage = false }: 
                     onChange={handleChange}
                     className="w-28 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300"
                   >
-                    <option value="+91">+91</option>
-                    <option value="+1">+1</option>
-                    <option value="+44">+44</option>
+                    {COUNTRY_CODES.map(({ code, country }) => (
+                      <option key={`${code}-${country}`} value={code}>
+                        {code} {country}
+                      </option>
+                    ))}
                   </select>
                   <input
                     type="tel"
@@ -349,9 +470,11 @@ export default function RegistrationForm({ onClose, isAttendancePage = false }: 
                       onChange={handleChange}
                       className="w-28 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300"
                     >
-                      <option value="+91">+91</option>
-                      <option value="+1">+1</option>
-                      <option value="+44">+44</option>
+                      {COUNTRY_CODES.map(({ code, country }) => (
+                        <option key={`${code}-${country}`} value={code}>
+                          {code} {country}
+                        </option>
+                      ))}
                     </select>
                     <input
                       type="tel"
