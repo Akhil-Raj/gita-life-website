@@ -15,6 +15,7 @@ const LoginAndAttendancePage = () => {
     const [selectedName, setSelectedName] = useState<string>('');
     const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+    const [isMarkingAttendance, setIsMarkingAttendance] = useState(false);
 
     useEffect(() => {
         const fetchNames = async () => {
@@ -118,6 +119,7 @@ const LoginAndAttendancePage = () => {
     };
 
     const handleMarkAttendance = async () => {
+        setIsMarkingAttendance(true);  // Start loading
         try {
             const response = await fetch('/api/mark-present', {
                 method: 'POST',
@@ -134,12 +136,14 @@ const LoginAndAttendancePage = () => {
             } else {
                 setNotification({ message: 'Error: ' + data.message, type: 'error' });
             }
+            setIsMarkingAttendance(false);  // Stop loading immediately after response
         } catch (error) {
             console.error('Error marking attendance:', error);
             setNotification({ message: 'Failed to mark attendance', type: 'error' });
+            setIsMarkingAttendance(false);  // Stop loading on error
         }
 
-        // Clear notification after 3 seconds
+        // Clear only the notification after 3 seconds
         setTimeout(() => {
             setNotification(null);
         }, 3000);
@@ -260,9 +264,20 @@ const LoginAndAttendancePage = () => {
                                 <button
                                     type="submit"
                                     onClick={handleMarkAttendance}
-                                    className="w-full bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition duration-300"
+                                    disabled={isMarkingAttendance}
+                                    className="w-full bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    Mark Attendance
+                                    {isMarkingAttendance ? (
+                                        <span className="flex items-center justify-center">
+                                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Marking...
+                                        </span>
+                                    ) : (
+                                        'Mark Attendance'
+                                    )}
                                 </button>
                             </form>
 
