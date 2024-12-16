@@ -24,7 +24,7 @@ interface FormErrors {
 interface RegistrationFormProps {
   onClose: () => void;
   isAttendancePage?: boolean;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 }
 
 interface Notification {
