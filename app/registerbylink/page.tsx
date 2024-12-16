@@ -40,31 +40,32 @@ const AttendancePage = () => {
         if (!name || !phoneNumber) return; // Ensure name and phone number are available before marking attendance
         setIsMarkingAttendance(true);  // Start loading
         try {
-            const response = await fetch('/api/mark-present', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name }),
-            });
+            // const response = await fetch('/api/mark-present', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({ name }),
+            // });
 
-            const data = await response.json();
-            if (response.ok) {
+            // const data = await response.json();
+            // if (response.ok) {
                 // New API call to mark registered
-                await fetch('/api/mark-registered', {
+                const response = await fetch('/api/mark-registered', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ contact: phoneNumber }), // Send the phone number as contact
                 });
-
+                const data = await response.json();
+                if (response.ok){
                 setNotification({ message: data.message, type: 'success' });
                 setName(null); // Clear the name field
                 setRegistrationMessage('You have been registered!'); // Set the message after registration
-            } else {
-                setNotification({ message: 'Error: ' + data.message, type: 'error' });
-            }
+                } else {
+                    setNotification({ message: 'Error: ' + data.message, type: 'error' });
+                }
             setIsMarkingAttendance(false);  // Stop loading immediately after response
         } catch (error) {
             console.error('Error marking attendance:', error);

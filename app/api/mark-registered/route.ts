@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     }
 
     // Find the row for the given contact number
-    const rowIndex = rows.findIndex(row => row[contactIndex] === contact);
+    const rowIndex = rows.findIndex(row => row[contactIndex].includes(contact));
     if (rowIndex === -1) {
       throw new Error('Contact not found in the attendance sheet');
     }
