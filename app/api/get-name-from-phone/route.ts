@@ -51,10 +51,11 @@ export async function GET(req: Request) {
 
       // Process contact numbers (split by ',' or '/')
       const contactNumbers = contact.split(/[,/]/)
-        .map((num: string) => num.trim())
-        .map((num: string) => num.slice(-4)); // Get last 4 digits
+        .map((num: string) => num.trim());
 
-      return contactNumbers.includes(phoneNumber.slice(-4)); // Compare with last 4 digits
+      console.log("cons : ", contactNumbers)
+
+      return contactNumbers.some((contact: string) => contact.includes(phoneNumber.slice(-4))); // Check if last 4 digits are a substring of any contact number
     });
 
     if (!foundEntry) {

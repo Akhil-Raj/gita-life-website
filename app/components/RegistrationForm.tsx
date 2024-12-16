@@ -24,6 +24,7 @@ interface FormErrors {
 interface RegistrationFormProps {
   onClose: () => void;
   isAttendancePage?: boolean;
+  onSuccess: () => void;
 }
 
 interface Notification {
@@ -150,7 +151,7 @@ const COUNTRY_CODES = [
   { code: '+263', country: 'Zimbabwe' }
 ];
 
-export default function RegistrationForm({ onClose, isAttendancePage = false }: RegistrationFormProps) {
+export default function RegistrationForm({ onClose, isAttendancePage = false, onSuccess }: RegistrationFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     gender: '',
@@ -278,6 +279,9 @@ export default function RegistrationForm({ onClose, isAttendancePage = false }: 
       });
 
       if (response.ok) {
+        if (onSuccess) {
+          onSuccess();
+        }
         setNotification({
           message: isAttendancePage 
             ? 'Registration successful! User has been registered and marked as present.'
