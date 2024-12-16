@@ -49,7 +49,7 @@ export async function POST(req: Request) {
         return currentFollowupOwner && currentFollowupOwner === followupOwner; // Filter by specific Followup owner
       })
       .map(row => {
-        const entry: Record<string, any> = {};
+        const entry: Record<string, string | number> = {};
         headers.forEach((header, index) => {
           entry[header] = row[index]; // Create an object for each row with header as key
         });
