@@ -53,7 +53,7 @@ export async function GET(req: Request) {
       const contactNumbers = contact.split(/[,/]/)
         .map((num: string) => num.trim());
 
-      return contactNumbers.some((contact: string) => contact.includes(phoneNumber.slice(-4))); // Check if last 4 digits are a substring of any contact number
+      return contactNumbers.some((contact: string) => contact.slice(-5).includes(phoneNumber.slice(-4))); // Check if last 4 digits are a substring of any contact number
     });
 
     if (!foundEntry) {
