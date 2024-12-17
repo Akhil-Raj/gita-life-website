@@ -47,8 +47,8 @@ function EventsContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                date: "Saturday November 16th, 2024",
-                name: "Monthly Youth Festival (With Rasnath Das)",
+                date: "Saturday December 21st, 2024",
+                name: "Monthly Youth Festival",
                 description: "MORE INFO BOX",
                 time: "5:30pm-8:30pm",
                 location: "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
@@ -56,7 +56,7 @@ function EventsContent() {
                 registrationLink: true,
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday December 28th, 2024",
                 name: "Jersey City Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "12:30-2:30pm",
@@ -64,7 +64,7 @@ function EventsContent() {
                 whatsappLink: "https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02",
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday December 28th, 2024",
                 name: "Harrison Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "3pm-5pm",
@@ -72,7 +72,7 @@ function EventsContent() {
                 whatsappLink: "https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6",
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday December 28th, 2024",
                 name: "NYU Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "6:30pm-9pm",
@@ -80,7 +80,7 @@ function EventsContent() {
                 contact: "+1 516 979 6593 (Akhil)",
               },
               {
-                date: "Saturday November 23rd, 2024",
+                date: "Saturday December 28th, 2024",
                 name: "Gita Class",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "6:50pm-8:30pm",
@@ -266,7 +266,7 @@ function EventsContent() {
                 <li>Spiritual Talk🎤</li>
                 <li>Dancing Kirtan🪘</li>
                 <li>Prasadam Feast🥗</li>
-                <li>And many more...!</li>
+                <li>And much more...!</li>
               </ul>
               <a href="https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-semibold hover:underline mt-4 block">
                 Join WhatsApp Group
