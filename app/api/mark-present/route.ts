@@ -41,12 +41,12 @@ export async function POST(req: Request) {
     const rows = response.data.values || [];
     const headers = rows[0] || [];
     
-    // Find index for the "Name" and "Nov MYF" columns
+    // Find index for the "Name" and "Dec MYF" columns
     const nameIndex = headers.findIndex(header => header === 'Name');
-    const statusIndex = headers.findIndex(header => header === 'Nov MYF');
+    const statusIndex = headers.findIndex(header => header === 'Dec MYF');
 
     if (nameIndex === -1 || statusIndex === -1) {
-      throw new Error('"Name" or "Nov MYF" column not found');
+      throw new Error('"Name" or "Dec MYF" column not found');
     }
 
     // Find the row for the given name
