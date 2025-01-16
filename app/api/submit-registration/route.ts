@@ -122,8 +122,8 @@ export async function POST(req: Request) {
               copyPaste: {
                 source: {
                   sheetId: 0,
-                  startRowIndex: 1,
-                  endRowIndex: 2,
+                  startRowIndex: 5,
+                  endRowIndex: 6,
                   startColumnIndex: novMYFIndex - 2,
                   endColumnIndex: novMYFIndex - 1,
                 },
