@@ -70,13 +70,13 @@ export async function POST(req: Request) {
     const nameIndex = headers.findIndex(header => header === 'Name');
     const contactIndex = headers.findIndex(header => header === 'Contact');
     const locationIndex = headers.findIndex(header => header === 'Location');
-    const novMYFIndex = headers.findIndex(header => header === 'Dec MYF');
+    const novMYFIndex = headers.findIndex(header => header === 'Jan MYF');
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
     if (locationIndex === -1) throw new Error('"Location" column not found');
-    if (novMYFIndex === -1) throw new Error('"Dec MYF" column not found');
+    if (novMYFIndex === -1) throw new Error('"Jan MYF" column not found');
 
     // Get column letters (keep existing getColumnLetter function)
     const getColumnLetter = (index: number) => {
@@ -109,7 +109,7 @@ export async function POST(req: Request) {
     const status = isAttendancePage ? 'Present' : 'Registered';
 
     if (existingRowIndex !== -1) {
-      // Case 1: Number exists, update the "Dec MYF" column
+      // Case 1: Number exists, update the "Jan MYF" column
       const targetColumn = getColumnLetter(novMYFIndex);
       const rowNumber = existingRowIndex + 1;
 
