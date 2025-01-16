@@ -47,10 +47,10 @@ function EventsContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                date: "Saturday December 21st, 2024",
+                date: "Saturday January 18th, 2025",
                 name: "Monthly Youth Festival",
                 description: "MORE INFO BOX",
-                time: "5:30pm-8:30pm",
+                time: "5:30pm onwards",
                 location: "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
                 whatsappLink: "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
                 registrationLink: true,
