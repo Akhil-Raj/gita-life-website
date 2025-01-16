@@ -58,7 +58,12 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
               <div className="text-gray-700 space-y-6">
                 {/* Main Description */}
                 <div className="text-lg">
-                This Saturday, December 21, 2024 at 5:30 PM, we’re hosting a magical Christmas Party at 305 Schermerhorn St, Brooklyn—and you’re invited! 🌟
+                Discover the Glories of India! 🌟
+
+                Join us to celebrates India's rich history, vibrant culture, and timeless achievements in our 18th MYF 🎉
+
+                Let's connect, learn, and take pride in the greatness of our heritage.
+
                 </div>
 
                 {/* Event Invitation */}
@@ -70,10 +75,10 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                 <div className="bg-orange-50 p-6 rounded-lg">
                   <h3 className="text-xl font-semibold mb-4">What's in it for you? ✨</h3>
                   <div className="grid grid-cols-2 gap-4 text-lg">
-                    <div className="flex items-center gap-2">🎭 Special Drama Performance: Watch a heart-touching play that’s full of festive spirit!</div>
-                    <div className="flex items-center gap-2">🎶 Dancing Kirtan: Feel the energy, move to the rhythm, and let your soul sing!</div>
-                    <div className="flex items-center gap-2">🍛 Free Festive Dinner: Think mouthwatering, soul-nourishing food that will leave you glowing!</div>
-                    <div className="flex items-center gap-2">🍛 Free Festive Dinner: Think mouthwatering, soul-nourishing food that will leave you glowing!</div>
+                    <div className="flex items-center gap-2">🎭 Special Drama Performance</div>
+                    <div className="flex items-center gap-2">🎶 Spritual Talk</div>
+                    <div className="flex items-center gap-2">🎶 Ecstatic Kirtan</div>
+                    <div className="flex items-center gap-2">🍛 Feast Prasadam</div>
                   </div>
                 </div>
 
@@ -84,7 +89,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                       <span className="text-2xl">🗓</span>
                       <div>
                         <div className="font-semibold">Date</div>
-                        <div>Dec 21, 2024 (Saturday)</div>
+                        <div>Jan 18, 2024 (Saturday)</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
