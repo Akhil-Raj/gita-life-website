@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       : `${formattedWhatsApp}, ${formattedContact}`;
 
     // Format name with gender in brackets
-    const formattedName = `${name} (${gender})`;
+    const formattedName = `${name}`;
 
     // Parse credentials and handle private key
     let credentials;
@@ -70,13 +70,14 @@ export async function POST(req: Request) {
     const nameIndex = headers.findIndex(header => header === 'Name');
     const contactIndex = headers.findIndex(header => header === 'Contact');
     const locationIndex = headers.findIndex(header => header === 'Location');
-    const novMYFIndex = headers.findIndex(header => header === 'Jan MYF');
+    const genderIndex = headers.findIndex(header => header === 'Gender');
+    const MYFIndex = headers.findIndex(header => header === 'Jan MYF');
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
     if (locationIndex === -1) throw new Error('"Location" column not found');
-    if (novMYFIndex === -1) throw new Error('"Jan MYF" column not found');
+    if (MYFIndex === -1) throw new Error('"Jan MYF" column not found');
 
     // Get column letters (keep existing getColumnLetter function)
     const getColumnLetter = (index: number) => {
@@ -110,7 +111,7 @@ export async function POST(req: Request) {
 
     if (existingRowIndex !== -1) {
       // Case 1: Number exists, update the "Jan MYF" column
-      const targetColumn = getColumnLetter(novMYFIndex);
+      const targetColumn = getColumnLetter(MYFIndex);
       const rowNumber = existingRowIndex + 1;
 
       // Copy data validation and set "Registered" value
@@ -124,15 +125,15 @@ export async function POST(req: Request) {
                   sheetId: 0,
                   startRowIndex: 5,
                   endRowIndex: 6,
-                  startColumnIndex: novMYFIndex - 2,
-                  endColumnIndex: novMYFIndex - 1,
+                  startColumnIndex: MYFIndex - 2,
+                  endColumnIndex: MYFIndex - 1,
                 },
                 destination: {
                   sheetId: 0,
                   startRowIndex: rowNumber - 1,
                   endRowIndex: rowNumber,
-                  startColumnIndex: novMYFIndex,
-                  endColumnIndex: novMYFIndex + 1,
+                  startColumnIndex: MYFIndex,
+                  endColumnIndex: MYFIndex + 1,
                 },
                 pasteType: 'PASTE_DATA_VALIDATION',
               },
@@ -155,6 +156,7 @@ export async function POST(req: Request) {
       const nameColumn = getColumnLetter(nameIndex);
       const contactColumn = getColumnLetter(contactIndex);
       const locationColumn = getColumnLetter(locationIndex);
+      const genderColumn = getColumnLetter(genderIndex)
 
       // Append the new registration data to specific columns
       const appendResponse = await sheets.spreadsheets.values.batchUpdate({
@@ -173,6 +175,10 @@ export async function POST(req: Request) {
             {
               range: `MYF attendees!${locationColumn}${rows.length + 1}`,
               values: [[schoolOrganization]]
+            },
+            {
+              range: `MYF attendees!${genderColumn}${rows.length + 1}`,
+              values: [[gender]]
             }
           ]
         }
@@ -190,15 +196,15 @@ export async function POST(req: Request) {
                   sheetId: 0,
                   startRowIndex: 1,
                   endRowIndex: 2,
-                  startColumnIndex: novMYFIndex - 2,
-                  endColumnIndex: novMYFIndex - 1,
+                  startColumnIndex: MYFIndex - 2,
+                  endColumnIndex: MYFIndex - 1,
                 },
                 destination: {
                   sheetId: 0,
                   startRowIndex: rowNumber - 1,
                   endRowIndex: rowNumber,
-                  startColumnIndex: novMYFIndex,
-                  endColumnIndex: novMYFIndex + 1,
+                  startColumnIndex: MYFIndex,
+                  endColumnIndex: MYFIndex + 1,
                 },
                 pasteType: 'PASTE_DATA_VALIDATION',
               },
@@ -207,7 +213,7 @@ export async function POST(req: Request) {
         },
       });
 
-      const targetColumn = getColumnLetter(novMYFIndex);
+      const targetColumn = getColumnLetter(MYFIndex);
       await sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: `MYF attendees!${targetColumn}${rowNumber}`,
