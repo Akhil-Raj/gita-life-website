@@ -44,7 +44,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
             {/* Image Section */}
             <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
               <Image
-                src="/MYF_GIF.gif"
+                src="/MYF_Image.jpeg"
                 alt="Monthly Youth Festival"
                 fill
                 className="object-contain bg-gray-100"
