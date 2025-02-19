@@ -56,7 +56,7 @@ function EventsContent() {
                 registrationLink: true,
               },
               {
-                date: "Saturday December 28th, 2024",
+                date: "Every Saturday",
                 name: "Jersey City Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "12:30-2:30pm",
@@ -64,7 +64,7 @@ function EventsContent() {
                 whatsappLink: "https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02",
               },
               {
-                date: "Saturday December 28th, 2024",
+                date: "Every Saturday",
                 name: "Harrison Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "3pm-5pm",
@@ -72,7 +72,7 @@ function EventsContent() {
                 whatsappLink: "https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6",
               },
               {
-                date: "Saturday December 28th, 2024",
+                date: "Every Saturday",
                 name: "NYU Weekly Program",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "6:30pm-9pm",
@@ -80,7 +80,7 @@ function EventsContent() {
                 contact: "+1 516 979 6593 (Akhil)",
               },
               {
-                date: "Saturday December 28th, 2024",
+                date: "Every Saturday",
                 name: "Gita Class",
                 description: "[CONTACT FOR MORE INFO]",
                 time: "6:50pm-8:30pm",
