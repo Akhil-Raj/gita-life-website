@@ -44,7 +44,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
             {/* Image Section */}
             <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
               <Image
-                src="/MYF_Image.jpeg"
+                src="/MYF_GIF.gif"
                 alt="Monthly Youth Festival"
                 fill
                 className="object-contain bg-gray-100"
@@ -58,12 +58,11 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
               <div className="text-gray-700 space-y-6">
                 {/* Main Description */}
                 <div className="text-lg">
-                Discover the Glories of India! 🌟
+                🌟 Gita Life NYC invites you for our Monthly Youth Festival! 🌟
 
-                Join us to celebrates India's rich history, vibrant culture, and timeless achievements in our 18th MYF 🎉
+                Get ready for a day full of inspiration, joy, and unforgettable memories! 🎉
 
-                Let's connect, learn, and take pride in the greatness of our heritage.
-
+                Join us for a spiritual journey.
                 </div>
 
                 {/* Event Invitation */}
@@ -75,10 +74,10 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                 <div className="bg-orange-50 p-6 rounded-lg">
                   <h3 className="text-xl font-semibold mb-4">What's in it for you? ✨</h3>
                   <div className="grid grid-cols-2 gap-4 text-lg">
-                    <div className="flex items-center gap-2">🎭 Special Drama Performance</div>
-                    <div className="flex items-center gap-2">🎶 Spritual Talk</div>
-                    <div className="flex items-center gap-2">🎶 Ecstatic Kirtan</div>
-                    <div className="flex items-center gap-2">🍛 Feast Prasadam</div>
+                    <div className="flex items-center gap-2">✨ Enlightening Spiritual Talk by Tulasi Dasa (traveling monk, author, known for his ecstatic kirtans)</div>
+                    <div className="flex items-center gap-2">🎭 Drama Performances – Witness incredible performances that will touch your heart!</div>
+                    <div className="flex items-center gap-2">🕺🏼 Dancing kirtan – Let loose, groove to the beat, and celebrate with us!</div>
+                    <div className="flex items-center gap-2">🍽️ Feast prasadam– have delicious prasadm and enjoy great company!</div>
                   </div>
                 </div>
 
@@ -88,15 +87,15 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                     <div className="flex items-center gap-2">
                       <span className="text-2xl">🗓</span>
                       <div>
-                        <div className="font-semibold">Date</div>
-                        <div>Jan 18, 2024 (Saturday)</div>
+                        <div className="font-semibold">🗓️Date</div>
+                        <div>22nd February (Saturday)</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-2xl">⏰</span>
                       <div>
-                        <div className="font-semibold">Time</div>
-                        <div>5:30 PM onwards</div>
+                        <div className="font-semibold">🕒</div>
+                        <div>Time: 5.45 PM</div>
                       </div>
                     </div>
                   </div>
@@ -104,8 +103,8 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
 
                 {/* Call to Action */}
                 <div className="text-center text-lg font-medium">
-                ✨ It’s Free. It’s Fun. It’s Unforgettable. 🎁🎄 Bring your friends and let’s make this an evening to remember.  
-                  <div className="mt-2">See you soon! 🌟</div>
+                ✨ It’s Free. It’s Fun. It’s Unforgettable. 🎁🎄 Bring your friends and let’s make this an evening to remember.
+                  <div className="mt-2">We look forward to see you🌟🌟🌟</div>
                 </div>
 
                 {/* Important Notes */}

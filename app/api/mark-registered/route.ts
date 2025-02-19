@@ -43,10 +43,10 @@ export async function POST(req: Request) {
     
     // Find index for the "Contact" and "Jan MYF" columns
     const contactIndex = headers.findIndex(header => header === 'Contact');
-    const statusIndex = headers.findIndex(header => header === 'Jan MYF');
+    const statusIndex = headers.findIndex(header => header === 'Feb MYF');
 
     if (contactIndex === -1 || statusIndex === -1) {
-      throw new Error('"Contact" or "Jan MYF" column not found');
+      throw new Error('"Contact" or "Feb MYF" column not found');
     }
 
     // Find the row for the given contact number
@@ -56,6 +56,15 @@ export async function POST(req: Request) {
       // row[contactIndex].includes(contact.slice(-4))
     }
     );
+    // const normalizePhoneNumber = (number: string) => {
+    //   return number.replace(/\D/g, ''); // Remove non-numeric characters
+    // };
+
+    // const rowIndex = rows.findIndex(row => {
+    //   const contactNumbers = row[contactIndex].split(/[,/]/).map(normalizePhoneNumber);
+    //   const normalizedInputContact = normalizePhoneNumber(contact);
+    //   return contactNumbers.some((contactNumber: string) => contactNumber.includes(normalizedInputContact));
+    // });
     if (rowIndex === -1) {
       throw new Error('Contact not found in the attendance sheet');
     }
