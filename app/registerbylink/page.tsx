@@ -123,7 +123,7 @@ const AttendancePage = () => {
                                 </div>
                             ) : (
                                 <div className="text-center">
-                                    <p className="mb-4 text-lg text-black">Loading your details...</p>
+                                    <p className="mb-4 text-lg text-black">Loading your details(Please proceed to register as a new user if the details are not loaded within seconds)...</p>
                                 </div>
                             )}
 
