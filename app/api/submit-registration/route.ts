@@ -194,9 +194,29 @@ export async function POST(req: Request) {
       // Check the current number of rows in the spreadsheet
       const currentRowCount = rows.length;
 
-      // Ensure the row number does not exceed the current row count
-      const adjustedRowNumber = rowNumber > currentRowCount ? currentRowCount : rowNumber;
+      // If the row number exceeds the current row count, insert a new row
+      if (rowNumber > currentRowCount) {
+        await sheets.spreadsheets.batchUpdate({
+          spreadsheetId: process.env.GOOGLE_SHEET_ID,
+          requestBody: {
+            requests: [
+              {
+                insertDimension: {
+                  range: {
+                    sheetId: 0,
+                    dimension: 'ROWS',
+                    startIndex: currentRowCount, // Insert at the end
+                    endIndex: currentRowCount + 1, // Insert one row
+                  },
+                  inheritFromBefore: false,
+                },
+              },
+            ],
+          },
+        });
+      }
 
+      // Proceed with the existing batch update for data validation
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         requestBody: {
@@ -212,8 +232,8 @@ export async function POST(req: Request) {
                 },
                 destination: {
                   sheetId: 0,
-                  startRowIndex: adjustedRowNumber - 1, // Use adjusted row number
-                  endRowIndex: adjustedRowNumber,
+                  startRowIndex: rowNumber - 1, // Use the original row number
+                  endRowIndex: rowNumber,
                   startColumnIndex: MYFIndex,
                   endColumnIndex: MYFIndex + 1,
                 },
