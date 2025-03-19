@@ -114,6 +114,8 @@ export async function POST(req: Request) {
       const targetColumn = getColumnLetter(MYFIndex);
       const rowNumber = existingRowIndex + 1;
 
+      console.log(`Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`);
+
       // Copy data validation and set "Registered" value
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
@@ -142,7 +144,7 @@ export async function POST(req: Request) {
         },
       });
 
-      await sheets.spreadsheets.values.update({
+      const updateResponse = await sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
@@ -150,6 +152,8 @@ export async function POST(req: Request) {
           values: [[status]],
         },
       });
+
+      console.log(`Update response: ${JSON.stringify(updateResponse.data)}`); // Log the response from the update
 
     } else {
       // Case 2: Number doesn't exist, append new row
