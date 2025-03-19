@@ -43,10 +43,10 @@ export async function POST(req: Request) {
     
     // Find index for the "Contact" and "Jan MYF" columns
     const contactIndex = headers.findIndex(header => header === 'Contact');
-    const statusIndex = headers.findIndex(header => header === 'Feb MYF');
+    const statusIndex = headers.findIndex(header => header === 'March MYF');
 
     if (contactIndex === -1 || statusIndex === -1) {
-      throw new Error('"Contact" or "Feb MYF" column not found');
+      throw new Error('"Contact" or "March MYF" column not found');
     }
 
     // Find the row for the given contact number

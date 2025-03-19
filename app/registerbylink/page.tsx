@@ -10,6 +10,7 @@ const AttendancePage = () => {
     const [showRegistrationForm, setShowRegistrationForm] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
     const [registrationMessage, setRegistrationMessage] = useState('');
+    const [nameDoesNotExists, setNameDoesNotExists] = useState(false)
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -27,8 +28,9 @@ const AttendancePage = () => {
             if (response.ok) {
                 setName(data.name);
             } else {
-                console.error(data.message);
+                console.info(data.message);
                 setName(null);
+                setNameDoesNotExists(true)
             }
         } catch (error) {
             console.error('Error fetching name:', error);
@@ -50,22 +52,22 @@ const AttendancePage = () => {
 
             // const data = await response.json();
             // if (response.ok) {
-                // New API call to mark registered
-                const response = await fetch('/api/mark-registered', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ contact: phoneNumber }), // Send the phone number as contact
-                });
-                const data = await response.json();
-                if (response.ok){
+            // New API call to mark registered
+            const response = await fetch('/api/mark-registered', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ contact: phoneNumber }), // Send the phone number as contact
+            });
+            const data = await response.json();
+            if (response.ok) {
                 setNotification({ message: data.message, type: 'success' });
                 setName(null); // Clear the name field
                 setRegistrationMessage('You have been registered!'); // Set the message after registration
-                } else {
-                    setNotification({ message: 'Error: ' + data.message, type: 'error' });
-                }
+            } else {
+                setNotification({ message: 'Error: ' + data.message, type: 'error' });
+            }
             setIsMarkingAttendance(false);  // Stop loading immediately after response
         } catch (error) {
             console.error('Error marking attendance:', error);
@@ -92,14 +94,13 @@ const AttendancePage = () => {
                     ) : (
                         <>
                             {notification && (
-                                <div className={`mb-4 p-3 rounded ${
-                                    notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                                }`}>
+                                <div className={`mb-4 p-3 rounded ${notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                    }`}>
                                     {notification.message}
                                 </div>
                             )}
                             <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Mark Registration</h1>
-                            
+
                             {name ? (
                                 <div className="text-center">
                                     <p className="mb-4 text-lg text-black">Are you {name}?</p>
@@ -121,11 +122,13 @@ const AttendancePage = () => {
                                         )}
                                     </button>
                                 </div>
+                            ) : (nameDoesNotExists ? (
+                                setShowRegistrationForm(true)
                             ) : (
                                 <div className="text-center">
-                                    <p className="mb-4 text-lg text-black">Loading your details(Please proceed to register as a new user if the details are not loaded within seconds)...</p>
+                                    <p className="mb-4 text-lg text-black">Loading your details...</p>
                                 </div>
-                            )}
+                            ))}
 
                             <button
                                 onClick={() => setShowRegistrationForm(true)}
@@ -139,8 +142,8 @@ const AttendancePage = () => {
             </main>
 
             {showRegistrationForm && (
-                <RegistrationForm 
-                    onClose={() => setShowRegistrationForm(false)} 
+                <RegistrationForm
+                    onClose={() => setShowRegistrationForm(false)}
                     isAttendancePage={false}
                     onSuccess={handleRegistrationSuccess}
                 />

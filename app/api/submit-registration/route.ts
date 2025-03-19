@@ -71,13 +71,13 @@ export async function POST(req: Request) {
     const contactIndex = headers.findIndex(header => header === 'Contact');
     const locationIndex = headers.findIndex(header => header === 'Location');
     const genderIndex = headers.findIndex(header => header === 'Gender');
-    const MYFIndex = headers.findIndex(header => header === 'Feb MYF');
+    const MYFIndex = headers.findIndex(header => header === 'March MYF');
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
     if (locationIndex === -1) throw new Error('"Location" column not found');
-    if (MYFIndex === -1) throw new Error('"Feb MYF" column not found');
+    if (MYFIndex === -1) throw new Error('"March MYF" column not found');
 
     // Get column letters (keep existing getColumnLetter function)
     const getColumnLetter = (index: number) => {
