@@ -190,6 +190,13 @@ export async function POST(req: Request) {
 
       // Copy data validation and set "Registered" for the new row
       const rowNumber = rows.length + 1;
+
+      // Check the current number of rows in the spreadsheet
+      const currentRowCount = rows.length;
+
+      // Ensure the row number does not exceed the current row count
+      const adjustedRowNumber = rowNumber > currentRowCount ? currentRowCount : rowNumber;
+
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         requestBody: {
@@ -205,8 +212,8 @@ export async function POST(req: Request) {
                 },
                 destination: {
                   sheetId: 0,
-                  startRowIndex: rowNumber - 1,
-                  endRowIndex: rowNumber,
+                  startRowIndex: adjustedRowNumber - 1, // Use adjusted row number
+                  endRowIndex: adjustedRowNumber,
                   startColumnIndex: MYFIndex,
                   endColumnIndex: MYFIndex + 1,
                 },
