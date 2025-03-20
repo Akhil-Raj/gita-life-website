@@ -244,16 +244,22 @@ export async function POST(req: Request) {
         },
       });
 
+      // Wait 500ms to ensure data validation is applied before updating the value
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+
       // After ensuring the row is added, proceed with the existing batch update for data validation
       const targetColumn = getColumnLetter(MYFIndex);
-      await sheets.spreadsheets.values.update({
+      const updateResponse = await sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: `MYF attendees!${targetColumn}${rowNumber}`, // Use the original row number
+        range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [[status]], // Update the status
+          values: [[status]],
         },
       });
+      
+      console.log('Status update response:', updateResponse.data);
     }
 
     return NextResponse.json({ message: 'Registration successful' }, { status: 200 });
