@@ -216,6 +216,17 @@ export async function POST(req: Request) {
         });
       }
 
+      // After ensuring the row is added, proceed with the existing batch update for data validation
+      const targetColumn = getColumnLetter(MYFIndex);
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: `MYF attendees!${targetColumn}${rowNumber}`, // Use the original row number
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+          values: [[status]], // Update the status
+        },
+      });
+
       // Proceed with the existing batch update for data validation
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
@@ -241,16 +252,6 @@ export async function POST(req: Request) {
               },
             },
           ],
-        },
-      });
-
-      const targetColumn = getColumnLetter(MYFIndex);
-      await sheets.spreadsheets.values.update({
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: `MYF attendees!${targetColumn}${rowNumber}`,
-        valueInputOption: 'USER_ENTERED',
-        requestBody: {
-          values: [[status]],
         },
       });
     }
