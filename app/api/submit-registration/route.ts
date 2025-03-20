@@ -162,32 +162,6 @@ export async function POST(req: Request) {
       const locationColumn = getColumnLetter(locationIndex);
       const genderColumn = getColumnLetter(genderIndex)
 
-      // Append the new registration data to specific columns
-      const appendResponse = await sheets.spreadsheets.values.batchUpdate({
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        requestBody: {
-          valueInputOption: 'USER_ENTERED',
-          data: [
-            {
-              range: `MYF attendees!${nameColumn}${rows.length + 1}`,
-              values: [[formattedName]]
-            },
-            {
-              range: `MYF attendees!${contactColumn}${rows.length + 1}`,
-              values: [[contactNumbers]]
-            },
-            {
-              range: `MYF attendees!${locationColumn}${rows.length + 1}`,
-              values: [[schoolOrganization]]
-            },
-            {
-              range: `MYF attendees!${genderColumn}${rows.length + 1}`,
-              values: [[gender]]
-            }
-          ]
-        }
-      });
-
       // Copy data validation and set "Registered" for the new row
       const rowNumber = rows.length + 1;
 
@@ -215,6 +189,32 @@ export async function POST(req: Request) {
           },
         });
       }
+
+      // Append the new registration data to specific columns
+      await sheets.spreadsheets.values.batchUpdate({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        requestBody: {
+          valueInputOption: 'USER_ENTERED',
+          data: [
+            {
+              range: `MYF attendees!${nameColumn}${rows.length + 1}`,
+              values: [[formattedName]]
+            },
+            {
+              range: `MYF attendees!${contactColumn}${rows.length + 1}`,
+              values: [[contactNumbers]]
+            },
+            {
+              range: `MYF attendees!${locationColumn}${rows.length + 1}`,
+              values: [[schoolOrganization]]
+            },
+            {
+              range: `MYF attendees!${genderColumn}${rows.length + 1}`,
+              values: [[gender]]
+            }
+          ]
+        }
+      });
 
       // After ensuring the row is added, proceed with the existing batch update for data validation
       const targetColumn = getColumnLetter(MYFIndex);
