@@ -182,7 +182,7 @@ export async function POST(req: Request) {
                     startIndex: currentRowCount, // Insert at the end
                     endIndex: currentRowCount + 1, // Insert one row
                   },
-                  inheritFromBefore: false,
+                  inheritFromBefore: true,
                 },
               },
             ],
