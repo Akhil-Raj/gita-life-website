@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
-import { google } from "googleapis";
+import { NextResponse } from 'next/server';
+import { google } from 'googleapis';
 
 if (!process.env.GOOGLE_SHEETS_CREDENTIALS) {
-  throw new Error("GOOGLE_SHEETS_CREDENTIALS environment variable is not set");
+  throw new Error('GOOGLE_SHEETS_CREDENTIALS environment variable is not set');
 }
 
 if (!process.env.GOOGLE_SHEET_ID) {
-  throw new Error("GOOGLE_SHEET_ID environment variable is not set");
+  throw new Error('GOOGLE_SHEET_ID environment variable is not set');
 }
 
 export async function POST(req: Request) {
@@ -43,35 +43,35 @@ export async function POST(req: Request) {
     try {
       credentials = JSON.parse(process.env.GOOGLE_SHEETS_CREDENTIALS!);
       // Replace escaped newlines with actual newlines
-      credentials.private_key = credentials.private_key.replace(/\\n/g, "\n");
+      credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
     } catch (error) {
-      console.error("Error parsing Google Sheets credentials:", error);
-      throw new Error("Invalid GOOGLE_SHEETS_CREDENTIALS format");
+      console.error('Error parsing Google Sheets credentials:', error);
+      throw new Error('Invalid GOOGLE_SHEETS_CREDENTIALS format');
     }
 
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
 
-    const sheets = google.sheets({ version: "v4", auth });
+    const sheets = google.sheets({ version: 'v4', auth });
 
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "MYF attendees", // Get all data
+      range: 'MYF attendees', // Get all data
     });
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
 
     // Find indices for all required columns
-    const nameIndex = headers.findIndex((header) => header === "Name");
-    const contactIndex = headers.findIndex((header) => header === "Contact");
-    const locationIndex = headers.findIndex((header) => header === "Location");
-    const genderIndex = headers.findIndex((header) => header === "Gender");
-    const MYFIndex = headers.findIndex((header) => header === "May MYF(2025)");
+    const nameIndex = headers.findIndex((header) => header === 'Name');
+    const contactIndex = headers.findIndex((header) => header === 'Contact');
+    const locationIndex = headers.findIndex((header) => header === 'Location');
+    const genderIndex = headers.findIndex((header) => header === 'Gender');
+    const MYFIndex = headers.findIndex((header) => header === 'May MYF(2025)');
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
 
     // Get column letters (keep existing getColumnLetter function)
     const getColumnLetter = (index: number) => {
-      let letter = "";
+      let letter = '';
       while (index >= 0) {
         letter = String.fromCharCode(65 + (index % 26)) + letter;
         index = Math.floor(index / 26) - 1;
@@ -98,9 +98,9 @@ export async function POST(req: Request) {
     // Check if either phone number exists in the Contact column
     let existingRowIndex = -1;
     for (let i = 1; i < rows.length; i++) {
-      const contactCell = rows[i][contactIndex] || "";
+      const contactCell = rows[i][contactIndex] || '';
       // Remove all non-digit characters for comparison
-      const cellDigits = contactCell.replace(/\D/g, "");
+      const cellDigits = contactCell.replace(/\D/g, '');
       if (
         cellDigits.includes(whatsappNumberOnly) ||
         (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))
@@ -111,7 +111,7 @@ export async function POST(req: Request) {
     }
 
     // Use 'Present' instead of 'Registered' when coming from attendance page
-    const status = isAttendancePage ? "Present" : "Registered";
+    const status = isAttendancePage ? 'Present' : 'Registered';
 
     if (existingRowIndex !== -1) {
       // Case 1: Number exists, update the "[Month] MYF" column
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
       const rowNumber = existingRowIndex + 1;
 
       console.log(
-        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`
+        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`,
       );
 
       // Copy data validation and set "Registered" value
@@ -143,7 +143,7 @@ export async function POST(req: Request) {
                   startColumnIndex: MYFIndex,
                   endColumnIndex: MYFIndex + 1,
                 },
-                pasteType: "PASTE_DATA_VALIDATION",
+                pasteType: 'PASTE_DATA_VALIDATION',
               },
             },
           ],
@@ -153,7 +153,7 @@ export async function POST(req: Request) {
       const updateResponse = await sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: `MYF attendees!${targetColumn}${rowNumber}`,
-        valueInputOption: "USER_ENTERED",
+        valueInputOption: 'USER_ENTERED',
         requestBody: {
           values: [[status]],
         },
@@ -183,7 +183,7 @@ export async function POST(req: Request) {
                 insertDimension: {
                   range: {
                     sheetId: 0,
-                    dimension: "ROWS",
+                    dimension: 'ROWS',
                     startIndex: currentRowCount, // Insert at the end
                     endIndex: currentRowCount + 1, // Insert one row
                   },
@@ -199,7 +199,7 @@ export async function POST(req: Request) {
       await sheets.spreadsheets.values.batchUpdate({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         requestBody: {
-          valueInputOption: "USER_ENTERED",
+          valueInputOption: 'USER_ENTERED',
           data: [
             {
               range: `MYF attendees!${nameColumn}${rows.length + 1}`,
@@ -242,7 +242,7 @@ export async function POST(req: Request) {
                   startColumnIndex: MYFIndex,
                   endColumnIndex: MYFIndex + 1,
                 },
-                pasteType: "PASTE_DATA_VALIDATION",
+                pasteType: 'PASTE_DATA_VALIDATION',
               },
             },
           ],
@@ -257,24 +257,24 @@ export async function POST(req: Request) {
       const updateResponse = await sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: `MYF attendees!${targetColumn}${rowNumber}`,
-        valueInputOption: "USER_ENTERED",
+        valueInputOption: 'USER_ENTERED',
         requestBody: {
           values: [[status]],
         },
       });
 
-      console.log("Status update response:", updateResponse.data);
+      console.log('Status update response:', updateResponse.data);
     }
 
     return NextResponse.json(
-      { message: "Registration successful" },
-      { status: 200 }
+      { message: 'Registration successful' },
+      { status: 200 },
     );
   } catch (error) {
-    console.error("Error submitting registration:", error);
+    console.error('Error submitting registration:', error);
     return NextResponse.json(
-      { message: "Registration failed" },
-      { status: 500 }
+      { message: 'Registration failed' },
+      { status: 500 },
     );
   }
 }

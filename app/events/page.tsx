@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
 import {
   FaCalendarAlt,
   FaClock,
   FaMapMarkerAlt,
   FaInfoCircle,
-} from "react-icons/fa";
-import { useState, useEffect, Suspense } from "react";
-import RegistrationForm from "../components/RegistrationForm";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import EventInfoModal from "../components/EventInfoModal";
+} from 'react-icons/fa';
+import { useState, useEffect, Suspense } from 'react';
+import RegistrationForm from '../components/RegistrationForm';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import EventInfoModal from '../components/EventInfoModal';
 
 // Create a wrapper component that uses the hooks
 function EventsContent() {
@@ -20,25 +20,25 @@ function EventsContent() {
   const [showEventInfo, setShowEventInfo] = useState(false);
 
   useEffect(() => {
-    const register = searchParams.get("register");
-    const info = searchParams.get("info");
+    const register = searchParams.get('register');
+    const info = searchParams.get('info');
 
-    if (register === "true") {
+    if (register === 'true') {
       setShowRegistrationForm(true);
     }
-    if (info === "true") {
+    if (info === 'true') {
       setShowEventInfo(true);
     }
   }, [searchParams]);
 
   const handleCloseForm = () => {
     setShowRegistrationForm(false);
-    router.replace("/events");
+    router.replace('/events');
   };
 
   const handleCloseEventInfo = () => {
     setShowEventInfo(false);
-    router.replace("/events");
+    router.replace('/events');
   };
 
   return (
@@ -56,52 +56,52 @@ function EventsContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                date: "Saturday May 10, 2025",
-                name: "Monthly Youth Festival",
-                description: "MORE INFO BOX",
-                time: "5:45pm onwards",
+                date: 'Saturday May 10, 2025',
+                name: 'Monthly Youth Festival',
+                description: 'MORE INFO BOX',
+                time: '5:45pm onwards',
                 location:
-                  "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
+                  'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
                 whatsappLink:
-                  "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
+                  'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
                 registrationLink: true,
               },
               {
-                date: "Every Saturday",
-                name: "Jersey City Weekly Program",
-                description: "[CONTACT FOR MORE INFO]",
-                time: "12:30-2:30pm",
-                location: "3287, JFK Boulevard, Jersey City, NJ",
+                date: 'Every Saturday',
+                name: 'Jersey City Weekly Program',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '12:30-2:30pm',
+                location: '3287, JFK Boulevard, Jersey City, NJ',
                 whatsappLink:
-                  "https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02",
+                  'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02',
               },
               {
-                date: "Every Saturday",
-                name: "Harrison Weekly Program",
-                description: "[CONTACT FOR MORE INFO]",
-                time: "3pm-5pm",
-                location: "600 FE, Rodgers Boulevard North. Harrison",
+                date: 'Every Saturday',
+                name: 'Harrison Weekly Program',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '3pm-5pm',
+                location: '600 FE, Rodgers Boulevard North. Harrison',
                 whatsappLink:
-                  "https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6",
+                  'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6',
               },
               {
-                date: "Every Saturday",
-                name: "NYU Weekly Program",
-                description: "[CONTACT FOR MORE INFO]",
-                time: "6:30pm-9pm",
+                date: 'Every Saturday',
+                name: 'NYU Weekly Program',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '6:30pm-9pm',
                 location:
-                  "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
-                contact: "+1 516 979 6593 (Akhil)",
+                  'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
+                contact: '+1 516 979 6593 (Akhil)',
               },
               {
-                date: "Every Saturday",
-                name: "Gita Class",
-                description: "[CONTACT FOR MORE INFO]",
-                time: "6:50pm-8:30pm",
+                date: 'Every Saturday',
+                name: 'Gita Class',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '6:50pm-8:30pm',
                 location:
-                  "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
+                  'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
                 whatsappLink:
-                  "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
+                  'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
               },
             ].map((event, index) => (
               <div
@@ -124,11 +124,11 @@ function EventsContent() {
                     <FaMapMarkerAlt className="mr-2 text-saffron" />
                     {event.location}
                   </p>
-                  {event.description === "MORE INFO BOX" ? (
+                  {event.description === 'MORE INFO BOX' ? (
                     <>
                       <button
                         onClick={() => {
-                          router.replace("/events?info=true");
+                          router.replace('/events?info=true');
                           setShowEventInfo(true);
                         }}
                         className="bg-saffron text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors duration-300"
@@ -159,9 +159,9 @@ function EventsContent() {
                   {event.contact && (
                     <p className="text-gray-700 mb-4">
                       <strong>
-                        Contact:{" "}
+                        Contact:{' '}
                         <a
-                          href={`tel:${event.contact.replace(/\D/g, "")}`}
+                          href={`tel:${event.contact.replace(/\D/g, '')}`}
                           className="text-blue-600 hover:underline"
                         >
                           {event.contact}
@@ -191,41 +191,41 @@ function EventsContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                day: "Every Saturday",
-                name: "GITA IN A NUTSHELL",
+                day: 'Every Saturday',
+                name: 'GITA IN A NUTSHELL',
                 description:
-                  "Live in-physical courses for youths based on Bhagavad Gita (Registration Compulsory for attendance)",
-                time: "All day",
-                location: "Iskcon NYC, New Jersey, Harrison City",
+                  'Live in-physical courses for youths based on Bhagavad Gita (Registration Compulsory for attendance)',
+                time: 'All day',
+                location: 'Iskcon NYC, New Jersey, Harrison City',
                 whatsappLinks: [
                   {
-                    name: "Harrison",
-                    link: "https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6",
+                    name: 'Harrison',
+                    link: 'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6',
                   },
                   {
-                    name: "Jersey City",
-                    link: "https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02",
+                    name: 'Jersey City',
+                    link: 'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02',
                   },
                 ],
               },
               {
-                day: "Date : On session by session basis",
-                name: "GITA IN A NUTSHELL - BACKUP",
-                description: "TOPIC : On session by session basis",
-                time: "Timing : On session by session basis",
-                location: "Online via Zoom",
-                contact: "+1 516 979 6593 (Akhil)",
+                day: 'Date : On session by session basis',
+                name: 'GITA IN A NUTSHELL - BACKUP',
+                description: 'TOPIC : On session by session basis',
+                time: 'Timing : On session by session basis',
+                location: 'Online via Zoom',
+                contact: '+1 516 979 6593 (Akhil)',
               },
               {
-                day: "Every Sunday",
-                name: "Gita Class",
+                day: 'Every Sunday',
+                name: 'Gita Class',
                 description:
-                  "Scientific understanding of Bhagavad Gita via verse by verse discourses",
-                time: "6:50pm-8:30pm",
+                  'Scientific understanding of Bhagavad Gita via verse by verse discourses',
+                time: '6:50pm-8:30pm',
                 location:
-                  "ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217",
+                  'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
                 whatsappLink:
-                  "https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg",
+                  'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
               },
             ].map((event, index) => (
               <div
@@ -283,9 +283,9 @@ function EventsContent() {
                   {event.contact && (
                     <p className="text-gray-700 mt-2">
                       <strong>
-                        Contact:{" "}
+                        Contact:{' '}
                         <a
-                          href={`tel:${event.contact.replace(/\D/g, "")}`}
+                          href={`tel:${event.contact.replace(/\D/g, '')}`}
                           className="text-blue-600 hover:underline"
                         >
                           {event.contact}
