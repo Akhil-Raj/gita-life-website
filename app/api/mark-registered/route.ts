@@ -42,17 +42,19 @@ export async function POST(req: Request) {
     const headers = rows[0] || [];
 
     // Find index for the "Contact" and "Jan MYF" columns
-    const contactIndex = headers.findIndex((header) => header === 'Contact');
-    const statusIndex = headers.findIndex((header) => header === 'May MYF(2025)');
+    const contactIndex = headers.findIndex(header => header === 'Contact');
+    const statusIndex = headers.findIndex(header => header === 'May MYF(2025)');
 
     if (contactIndex === -1 || statusIndex === -1) {
       throw new Error('"Contact" or "May MYF" column not found');
     }
 
     // Find the row for the given contact number
-    const rowIndex = rows.findIndex((row) => {
+    const rowIndex = rows.findIndex(row => {
       const contactNumbers = row[contactIndex].split(/[,/]/);
-      return contactNumbers.some((contactNumber: string) => contactNumber.slice(-5).includes(contact.slice(-4)));
+      return contactNumbers.some((contactNumber: string) =>
+        contactNumber.slice(-5).includes(contact.slice(-4)),
+      );
       // row[contactIndex].includes(contact.slice(-4))
     });
     // const normalizePhoneNumber = (number: string) => {

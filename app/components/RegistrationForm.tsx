@@ -151,7 +151,11 @@ const COUNTRY_CODES = [
   { code: '+263', country: 'Zimbabwe' },
 ];
 
-export default function RegistrationForm({ onClose, isAttendancePage = false, onSuccess }: RegistrationFormProps) {
+export default function RegistrationForm({
+  onClose,
+  isAttendancePage = false,
+  onSuccess,
+}: RegistrationFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     gender: '',
@@ -211,7 +215,8 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
     if (!schoolOrgTrimmed) {
       newErrors.schoolOrganization = 'School/Organization is required';
     } else if (!/^[a-zA-Z0-9\s'.,-]{2,100}$/.test(schoolOrgTrimmed)) {
-      newErrors.schoolOrganization = 'Please enter a valid school or organization name (2-100 characters)';
+      newErrors.schoolOrganization =
+        'Please enter a valid school or organization name (2-100 characters)';
     }
 
     setErrors(newErrors);
@@ -222,25 +227,29 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
     const { name, value, type } = e.target;
 
     // Clear error when field is being edited
-    setErrors((prev) => ({ ...prev, [name]: undefined }));
+    setErrors(prev => ({ ...prev, [name]: undefined }));
 
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
-      setFormData((prevData) => ({
+      setFormData(prevData => ({
         ...prevData,
         [name]: checked,
-        ...(name === 'isWhatsappSameAsContact' && checked ? { contactNumber: prevData.whatsappNumber, contactExtension: prevData.whatsappExtension } : {}),
+        ...(name === 'isWhatsappSameAsContact' && checked
+          ? { contactNumber: prevData.whatsappNumber, contactExtension: prevData.whatsappExtension }
+          : {}),
       }));
     } else if (name === 'whatsappNumber' || name === 'contactNumber') {
       // Only allow digits in phone number fields
       const sanitizedValue = value.replace(/\D/g, '').slice(0, 10);
-      setFormData((prevData) => ({
+      setFormData(prevData => ({
         ...prevData,
         [name]: sanitizedValue,
-        ...(name === 'whatsappNumber' && prevData.isWhatsappSameAsContact ? { contactNumber: sanitizedValue } : {}),
+        ...(name === 'whatsappNumber' && prevData.isWhatsappSameAsContact
+          ? { contactNumber: sanitizedValue }
+          : {}),
       }));
     } else {
-      setFormData((prevData) => ({
+      setFormData(prevData => ({
         ...prevData,
         [name]: value,
         ...(name.includes('whatsapp') && prevData.isWhatsappSameAsContact
@@ -279,7 +288,9 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
           onSuccess();
         }
         setNotification({
-          message: isAttendancePage ? 'Registration successful! User has been registered and marked as present.' : 'Registration successful! Thank you for registering.',
+          message: isAttendancePage
+            ? 'Registration successful! User has been registered and marked as present.'
+            : 'Registration successful! Thank you for registering.',
           type: 'success',
         });
         console.log('Registration successful');
@@ -309,21 +320,43 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
   return (
     <>
       {notification && (
-        <div className={`fixed top-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg max-w-md z-[10000] ${notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`} role="alert">
+        <div
+          className={`fixed top-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg max-w-md z-[10000] ${notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+          role="alert"
+        >
           <div className="flex items-center">
             {notification.type === 'success' ? (
               <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             ) : (
               <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             )}
             <p>{notification.message}</p>
-            <button onClick={() => setNotification(null)} className="ml-auto pl-3" aria-label="Close">
+            <button
+              onClick={() => setNotification(null)}
+              className="ml-auto pl-3"
+              aria-label="Close"
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -331,11 +364,23 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
       )}
 
       <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] p-4 backdrop-blur-sm">
-        <div className="bg-white rounded-xl w-full max-w-2xl relative shadow-2xl transform transition-all duration-300 scale-100" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="bg-white rounded-xl w-full max-w-2xl relative shadow-2xl transform transition-all duration-300 scale-100"
+          onClick={e => e.stopPropagation()}
+        >
           {/* Close button */}
-          <button onClick={onClose} className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-2 backdrop-blur-sm transition-all duration-300 z-10 shadow-lg" aria-label="Close modal">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-2 backdrop-blur-sm transition-all duration-300 z-10 shadow-lg"
+            aria-label="Close modal"
+          >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
@@ -352,7 +397,15 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                 <label htmlFor="name" className="block mb-2 text-gray-800 font-medium">
                   Name <span className="text-red-500">*</span>
                 </label>
-                <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.name ? 'border-red-500' : 'border-gray-300'}`} />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+                />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
 
@@ -361,7 +414,14 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                 <label htmlFor="gender" className="block mb-2 text-gray-800 font-medium">
                   Gender <span className="text-red-500">*</span>
                 </label>
-                <select id="gender" name="gender" value={formData.gender} onChange={handleChange} required className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300">
+                <select
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300"
+                >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -375,22 +435,46 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                   WhatsApp Number <span className="text-red-500">*</span>
                 </label>
                 <div className="flex gap-3">
-                  <select id="whatsappExtension" name="whatsappExtension" value={formData.whatsappExtension} onChange={handleChange} className="w-28 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300">
+                  <select
+                    id="whatsappExtension"
+                    name="whatsappExtension"
+                    value={formData.whatsappExtension}
+                    onChange={handleChange}
+                    className="w-28 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300"
+                  >
                     {COUNTRY_CODES.map(({ code, country }) => (
                       <option key={`${code}-${country}`} value={code}>
                         {code} {country}
                       </option>
                     ))}
                   </select>
-                  <input type="tel" id="whatsappNumber" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleChange} required className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.whatsappNumber ? 'border-red-500' : 'border-gray-300'}`} />
+                  <input
+                    type="tel"
+                    id="whatsappNumber"
+                    name="whatsappNumber"
+                    value={formData.whatsappNumber}
+                    onChange={handleChange}
+                    required
+                    className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.whatsappNumber ? 'border-red-500' : 'border-gray-300'}`}
+                  />
                 </div>
-                {errors.whatsappNumber && <p className="text-red-500 text-sm mt-1">{errors.whatsappNumber}</p>}
+                {errors.whatsappNumber && (
+                  <p className="text-red-500 text-sm mt-1">{errors.whatsappNumber}</p>
+                )}
               </div>
 
               {/* Checkbox for same number */}
               <div className="flex items-center">
-                <input type="checkbox" name="isWhatsappSameAsContact" checked={formData.isWhatsappSameAsContact} onChange={handleChange} className="w-4 h-4 text-saffron border-gray-300 rounded focus:ring-saffron" />
-                <label className="ml-2 text-gray-700">WhatsApp number is same as contact number / alternative number</label>
+                <input
+                  type="checkbox"
+                  name="isWhatsappSameAsContact"
+                  checked={formData.isWhatsappSameAsContact}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-saffron border-gray-300 rounded focus:ring-saffron"
+                />
+                <label className="ml-2 text-gray-700">
+                  WhatsApp number is same as contact number / alternative number
+                </label>
               </div>
 
               {/* Contact Number Field (conditional) */}
@@ -400,38 +484,91 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                     Contact Number / Alternate Number <span className="text-red-500">*</span>
                   </label>
                   <div className="flex gap-3">
-                    <select id="contactExtension" name="contactExtension" value={formData.contactExtension} onChange={handleChange} className="w-28 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300">
+                    <select
+                      id="contactExtension"
+                      name="contactExtension"
+                      value={formData.contactExtension}
+                      onChange={handleChange}
+                      className="w-28 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300"
+                    >
                       {COUNTRY_CODES.map(({ code, country }) => (
                         <option key={`${code}-${country}`} value={code}>
                           {code} {country}
                         </option>
                       ))}
                     </select>
-                    <input type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} required className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.contactNumber ? 'border-red-500' : 'border-gray-300'}`} />
+                    <input
+                      type="tel"
+                      id="contactNumber"
+                      name="contactNumber"
+                      value={formData.contactNumber}
+                      onChange={handleChange}
+                      required
+                      className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.contactNumber ? 'border-red-500' : 'border-gray-300'}`}
+                    />
                   </div>
-                  {errors.contactNumber && <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>}
+                  {errors.contactNumber && (
+                    <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>
+                  )}
                 </div>
               )}
 
               {/* School/Organization Field */}
               <div>
-                <label htmlFor="schoolOrganization" className="block mb-2 text-gray-800 font-medium">
+                <label
+                  htmlFor="schoolOrganization"
+                  className="block mb-2 text-gray-800 font-medium"
+                >
                   School/Organization <span className="text-red-500">*</span>
                 </label>
-                <input type="text" id="schoolOrganization" name="schoolOrganization" value={formData.schoolOrganization} onChange={handleChange} required className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.schoolOrganization ? 'border-red-500' : 'border-gray-300'}`} />
-                {errors.schoolOrganization && <p className="text-red-500 text-sm mt-1">{errors.schoolOrganization}</p>}
+                <input
+                  type="text"
+                  id="schoolOrganization"
+                  name="schoolOrganization"
+                  value={formData.schoolOrganization}
+                  onChange={handleChange}
+                  required
+                  className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.schoolOrganization ? 'border-red-500' : 'border-gray-300'}`}
+                />
+                {errors.schoolOrganization && (
+                  <p className="text-red-500 text-sm mt-1">{errors.schoolOrganization}</p>
+                )}
               </div>
 
               {/* Action Buttons */}
               <div className="flex justify-end gap-3 pt-4">
-                <button type="button" onClick={onClose} className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-300">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                >
                   Cancel
                 </button>
-                <button type="submit" disabled={isSubmitting} className="px-6 py-2.5 bg-saffron text-white rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-2.5 bg-saffron text-white rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+                >
                   {isSubmitting ? (
-                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                   ) : (
                     'Submit'

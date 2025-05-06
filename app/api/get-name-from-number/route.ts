@@ -34,8 +34,8 @@ export async function GET(req: Request) {
     const headers = rows[0] || [];
 
     // Find indices for both Name and Contact columns
-    const nameIndex = headers.findIndex((header) => header === 'Name');
-    const contactIndex = headers.findIndex((header) => header === 'Contact');
+    const nameIndex = headers.findIndex(header => header === 'Name');
+    const contactIndex = headers.findIndex(header => header === 'Contact');
 
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
@@ -43,7 +43,7 @@ export async function GET(req: Request) {
     // Extract names and contact numbers, process them together
     const namesWithContacts = rows
       .slice(1)
-      .map((row) => {
+      .map(row => {
         const name = row[nameIndex];
         const contact = row[contactIndex];
 
@@ -63,7 +63,7 @@ export async function GET(req: Request) {
           contactNumbers,
         };
       })
-      .filter((entry) => entry !== null);
+      .filter(entry => entry !== null);
 
     return NextResponse.json({ entries: namesWithContacts }, { status: 200 });
   } catch (error) {

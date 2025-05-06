@@ -42,15 +42,15 @@ export async function POST(req: Request) {
     const headers = rows[0] || [];
 
     // Find index for the "Name" and "[Month] MYF" columns
-    const nameIndex = headers.findIndex((header) => header === 'Name');
-    const statusIndex = headers.findIndex((header) => header === 'May MYF(2025)');
+    const nameIndex = headers.findIndex(header => header === 'Name');
+    const statusIndex = headers.findIndex(header => header === 'May MYF(2025)');
 
     if (nameIndex === -1 || statusIndex === -1) {
       throw new Error('"Name" or "May MYF(2025)" column not found');
     }
 
     // Find the row for the given name
-    const rowIndex = rows.findIndex((row) => row[nameIndex] === name);
+    const rowIndex = rows.findIndex(row => row[nameIndex] === name);
     if (rowIndex === -1) {
       throw new Error('Name not found in the attendance sheet');
     }

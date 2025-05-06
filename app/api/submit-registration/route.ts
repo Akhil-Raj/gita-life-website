@@ -12,14 +12,28 @@ if (!process.env.GOOGLE_SHEET_ID) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, gender, whatsappExtension, whatsappNumber, schoolOrganization, contactExtension, contactNumber, isWhatsappSameAsContact, isAttendancePage } = body;
+    const {
+      name,
+      gender,
+      whatsappExtension,
+      whatsappNumber,
+      schoolOrganization,
+      contactExtension,
+      contactNumber,
+      isWhatsappSameAsContact,
+      isAttendancePage,
+    } = body;
 
     // Format phone numbers with country code and wrap in single quotes to force text format
     const formattedWhatsApp = `'${whatsappExtension}${whatsappNumber}'`;
-    const formattedContact = isWhatsappSameAsContact ? formattedWhatsApp : `'${contactExtension}${contactNumber}'`;
+    const formattedContact = isWhatsappSameAsContact
+      ? formattedWhatsApp
+      : `'${contactExtension}${contactNumber}'`;
 
     // Combine numbers if they're different
-    const contactNumbers = isWhatsappSameAsContact ? formattedWhatsApp : `${formattedWhatsApp}, ${formattedContact}`;
+    const contactNumbers = isWhatsappSameAsContact
+      ? formattedWhatsApp
+      : `${formattedWhatsApp}, ${formattedContact}`;
 
     // Format name with gender in brackets
     const formattedName = `${name}`;
@@ -53,11 +67,11 @@ export async function POST(req: Request) {
     const headers = rows[0] || [];
 
     // Find indices for all required columns
-    const nameIndex = headers.findIndex((header) => header === 'Name');
-    const contactIndex = headers.findIndex((header) => header === 'Contact');
-    const locationIndex = headers.findIndex((header) => header === 'Location');
-    const genderIndex = headers.findIndex((header) => header === 'Gender');
-    const MYFIndex = headers.findIndex((header) => header === 'May MYF(2025)');
+    const nameIndex = headers.findIndex(header => header === 'Name');
+    const contactIndex = headers.findIndex(header => header === 'Contact');
+    const locationIndex = headers.findIndex(header => header === 'Location');
+    const genderIndex = headers.findIndex(header => header === 'Gender');
+    const MYFIndex = headers.findIndex(header => header === 'May MYF(2025)');
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
@@ -85,7 +99,10 @@ export async function POST(req: Request) {
       const contactCell = rows[i][contactIndex] || '';
       // Remove all non-digit characters for comparison
       const cellDigits = contactCell.replace(/\D/g, '');
-      if (cellDigits.includes(whatsappNumberOnly) || (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))) {
+      if (
+        cellDigits.includes(whatsappNumberOnly) ||
+        (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))
+      ) {
         existingRowIndex = i;
         break;
       }
@@ -99,7 +116,9 @@ export async function POST(req: Request) {
       const targetColumn = getColumnLetter(MYFIndex);
       const rowNumber = existingRowIndex + 1;
 
-      console.log(`Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`);
+      console.log(
+        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`,
+      );
 
       // Copy data validation and set "Registered" value
       await sheets.spreadsheets.batchUpdate({
@@ -229,7 +248,7 @@ export async function POST(req: Request) {
       });
 
       // Wait 500ms to ensure data validation is applied before updating the value
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       // After ensuring the row is added, proceed with the existing batch update for data validation
       const targetColumn = getColumnLetter(MYFIndex);

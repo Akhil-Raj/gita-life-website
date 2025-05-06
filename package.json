@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "eslint-config-prettier": "^10.1.2",
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "15.0.1",

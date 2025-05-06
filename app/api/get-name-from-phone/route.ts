@@ -38,25 +38,30 @@ export async function GET(req: Request) {
     const headers = rows[0] || [];
 
     // Find indices for both Name and Contact columns
-    const nameIndex = headers.findIndex((header) => header === 'Name');
-    const contactIndex = headers.findIndex((header) => header === 'Contact');
+    const nameIndex = headers.findIndex(header => header === 'Name');
+    const contactIndex = headers.findIndex(header => header === 'Contact');
 
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
 
     // Search for the phone number in the contact column
-    const foundEntry = rows.slice(1).find((row) => {
+    const foundEntry = rows.slice(1).find(row => {
       const contact = row[contactIndex];
       if (!contact) return false;
 
       // Process contact numbers (split by ',' or '/')
       const contactNumbers = contact.split(/[,/]/).map((num: string) => num.trim());
 
-      return contactNumbers.some((contact: string) => contact.slice(-5).includes(phoneNumber.slice(-4))); // Check if last 4 digits are a substring of any contact number
+      return contactNumbers.some((contact: string) =>
+        contact.slice(-5).includes(phoneNumber.slice(-4)),
+      ); // Check if last 4 digits are a substring of any contact number
     });
 
     if (!foundEntry) {
-      return NextResponse.json({ message: 'No entry found for the provided phone number' }, { status: 404 });
+      return NextResponse.json(
+        { message: 'No entry found for the provided phone number' },
+        { status: 404 },
+      );
     }
 
     const name = foundEntry[nameIndex];

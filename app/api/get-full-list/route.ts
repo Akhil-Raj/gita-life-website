@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const headers = rows[0] || [];
 
     // Find indices for Followup owner column
-    const followupOwnerIndex = headers.findIndex((header) => header === 'Followup owner');
+    const followupOwnerIndex = headers.findIndex(header => header === 'Followup owner');
 
     if (followupOwnerIndex === -1) throw new Error('"Followup owner" column not found');
 
@@ -45,11 +45,11 @@ export async function POST(req: Request) {
     // Extract all data, filtering by Followup owner
     const filteredData = rows
       .slice(1)
-      .filter((row) => {
+      .filter(row => {
         const currentFollowupOwner = row[followupOwnerIndex]; // Get the followup owner for the current row
         return currentFollowupOwner && currentFollowupOwner === followupOwner; // Filter by specific Followup owner
       })
-      .map((row) => {
+      .map(row => {
         const entry: Record<string, string | number> = {};
         headers.forEach((header, index) => {
           entry[header] = row[index]; // Create an object for each row with header as key

@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       allowedOrigins: ['*'],
     },
   },
-  webpack: (config) => {
+  webpack: config => {
     config.module.rules.push({
       test: /\.json$/,
       type: 'json',
@@ -26,7 +26,8 @@ const nextConfig: NextConfig = {
           { key: 'Access-Control-Allow-Methods', value: 'GET,DELETE,PATCH,POST,PUT' },
           {
             key: 'Access-Control-Allow-Headers',
-            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+            value:
+              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
           },
         ],
       },
