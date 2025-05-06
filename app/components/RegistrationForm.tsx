@@ -148,13 +148,13 @@ const COUNTRY_CODES = [
   { code: '+84', country: 'Vietnam' },
   { code: '+967', country: 'Yemen' },
   { code: '+260', country: 'Zambia' },
-  { code: '+263', country: 'Zimbabwe' },
+  { code: '+263', country: 'Zimbabwe' }
 ];
 
 export default function RegistrationForm({
   onClose,
   isAttendancePage = false,
-  onSuccess,
+  onSuccess
 }: RegistrationFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -164,7 +164,7 @@ export default function RegistrationForm({
     schoolOrganization: '',
     contactExtension: '+1',
     contactNumber: '',
-    isWhatsappSameAsContact: false,
+    isWhatsappSameAsContact: false
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -236,7 +236,7 @@ export default function RegistrationForm({
         [name]: checked,
         ...(name === 'isWhatsappSameAsContact' && checked
           ? { contactNumber: prevData.whatsappNumber, contactExtension: prevData.whatsappExtension }
-          : {}),
+          : {})
       }));
     } else if (name === 'whatsappNumber' || name === 'contactNumber') {
       // Only allow digits in phone number fields
@@ -246,7 +246,7 @@ export default function RegistrationForm({
         [name]: sanitizedValue,
         ...(name === 'whatsappNumber' && prevData.isWhatsappSameAsContact
           ? { contactNumber: sanitizedValue }
-          : {}),
+          : {})
       }));
     } else {
       setFormData(prevData => ({
@@ -255,9 +255,9 @@ export default function RegistrationForm({
         ...(name.includes('whatsapp') && prevData.isWhatsappSameAsContact
           ? {
               contactNumber: name === 'whatsappNumber' ? value : prevData.contactNumber,
-              contactExtension: name === 'whatsappExtension' ? value : prevData.contactExtension,
+              contactExtension: name === 'whatsappExtension' ? value : prevData.contactExtension
             }
-          : {}),
+          : {})
       }));
     }
   };
@@ -275,12 +275,12 @@ export default function RegistrationForm({
       const response = await fetch('/api/submit-registration', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           ...formData,
-          isAttendancePage,
-        }),
+          isAttendancePage
+        })
       });
 
       if (response.ok) {
@@ -291,7 +291,7 @@ export default function RegistrationForm({
           message: isAttendancePage
             ? 'Registration successful! User has been registered and marked as present.'
             : 'Registration successful! Thank you for registering.',
-          type: 'success',
+          type: 'success'
         });
         console.log('Registration successful');
         // Delay the close action to allow the notification to be visible
@@ -302,14 +302,14 @@ export default function RegistrationForm({
         const errorData = await response.json();
         setNotification({
           message: 'Registration failed. Please try again later.',
-          type: 'error',
+          type: 'error'
         });
         console.error('Registration failed:', errorData);
       }
     } catch (error) {
       setNotification({
         message: 'An error occurred while submitting the form. Please try again later.',
-        type: 'error',
+        type: 'error'
       });
       console.error('Error submitting form:', error);
     } finally {

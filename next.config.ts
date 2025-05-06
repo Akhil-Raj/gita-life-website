@@ -2,17 +2,17 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['img1.wsimg.com'],
+    domains: ['img1.wsimg.com']
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['*'],
-    },
+      allowedOrigins: ['*']
+    }
   },
   webpack: config => {
     config.module.rules.push({
       test: /\.json$/,
-      type: 'json',
+      type: 'json'
     });
     return config;
   },
@@ -27,12 +27,12 @@ const nextConfig: NextConfig = {
           {
             key: 'Access-Control-Allow-Headers',
             value:
-              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-          },
-        ],
-      },
+              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+          }
+        ]
+      }
     ];
-  },
+  }
 };
 
 export default nextConfig;

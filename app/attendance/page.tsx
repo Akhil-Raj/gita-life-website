@@ -52,7 +52,7 @@ const LoginAndAttendancePage = () => {
     const event = {
       preventDefault: () => {},
       currentTarget: {} as HTMLFormElement,
-      target: {} as HTMLFormElement,
+      target: {} as HTMLFormElement
     } as unknown as React.FormEvent;
 
     await handleSubmit(event);
@@ -62,7 +62,7 @@ const LoginAndAttendancePage = () => {
     const value = e.target.value;
     setSelectedName(value);
     setFilteredEntries(
-      entries.filter(entry => entry.name.toLowerCase().startsWith(value.toLowerCase())),
+      entries.filter(entry => entry.name.toLowerCase().startsWith(value.toLowerCase()))
     );
   };
 
@@ -73,9 +73,9 @@ const LoginAndAttendancePage = () => {
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password })
     });
 
     if (response.ok) {
@@ -98,7 +98,7 @@ const LoginAndAttendancePage = () => {
     schoolOrganization: 'Example School',
     contactExtension: '+1',
     contactNumber: '9876543210',
-    isWhatsappSameAsContact: false,
+    isWhatsappSameAsContact: false
   };
   const handleAttendanceSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,8 +106,8 @@ const LoginAndAttendancePage = () => {
       const response = await fetch('/api/get-attendance-list', {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       });
 
       if (response.ok) {
@@ -127,9 +127,9 @@ const LoginAndAttendancePage = () => {
       const response = await fetch('/api/mark-present', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name: selectedName }),
+        body: JSON.stringify({ name: selectedName })
       });
 
       const data = await response.json();

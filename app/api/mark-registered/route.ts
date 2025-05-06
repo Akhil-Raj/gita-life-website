@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees',
+      range: 'MYF attendees'
     });
 
     const rows = response.data.values || [];
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     const rowIndex = rows.findIndex(row => {
       const contactNumbers = row[contactIndex].split(/[,/]/);
       return contactNumbers.some((contactNumber: string) =>
-        contactNumber.slice(-5).includes(contact.slice(-4)),
+        contactNumber.slice(-5).includes(contact.slice(-4))
       );
       // row[contactIndex].includes(contact.slice(-4))
     });
@@ -79,8 +79,8 @@ export async function POST(req: Request) {
       range: `MYF attendees!${targetColumn}${rowNumber}`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [['Registered']],
-      },
+        values: [['Registered']]
+      }
     });
 
     return NextResponse.json({ message: 'Registration marked as Registered' }, { status: 200 });

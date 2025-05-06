@@ -59,9 +59,9 @@ const AttendancePage = () => {
       const response = await fetch('/api/mark-registered', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ contact: phoneNumber }), // Send the phone number as contact
+        body: JSON.stringify({ contact: phoneNumber }) // Send the phone number as contact
       });
       const data = await response.json();
       if (response.ok) {

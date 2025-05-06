@@ -155,6 +155,6 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
       {/* Registration Form Modal */}
       {showRegistrationForm && <RegistrationForm onClose={handleCloseRegistration} />}
     </>,
-    document.body,
+    document.body
   );
 }

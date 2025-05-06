@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees',
+      range: 'MYF attendees'
     });
 
     const rows = response.data.values || [];
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
       range: `MYF attendees!${targetColumn}${rowNumber}`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [['Present']],
-      },
+        values: [['Present']]
+      }
     });
 
     return NextResponse.json({ message: 'Attendance marked as Present' }, { status: 200 });

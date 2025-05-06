@@ -52,7 +52,7 @@ function EventsContent() {
                 time: '5:45pm onwards',
                 location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
                 whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
-                registrationLink: true,
+                registrationLink: true
               },
               {
                 date: 'Every Saturday',
@@ -60,7 +60,7 @@ function EventsContent() {
                 description: '[CONTACT FOR MORE INFO]',
                 time: '12:30-2:30pm',
                 location: '3287, JFK Boulevard, Jersey City, NJ',
-                whatsappLink: 'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02',
+                whatsappLink: 'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02'
               },
               {
                 date: 'Every Saturday',
@@ -68,7 +68,7 @@ function EventsContent() {
                 description: '[CONTACT FOR MORE INFO]',
                 time: '3pm-5pm',
                 location: '600 FE, Rodgers Boulevard North. Harrison',
-                whatsappLink: 'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6',
+                whatsappLink: 'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6'
               },
               {
                 date: 'Every Saturday',
@@ -76,7 +76,7 @@ function EventsContent() {
                 description: '[CONTACT FOR MORE INFO]',
                 time: '6:30pm-9pm',
                 location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
-                contact: '+1 516 979 6593 (Akhil)',
+                contact: '+1 516 979 6593 (Akhil)'
               },
               {
                 date: 'Every Saturday',
@@ -84,8 +84,8 @@ function EventsContent() {
                 description: '[CONTACT FOR MORE INFO]',
                 time: '6:50pm-8:30pm',
                 location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
-                whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
-              },
+                whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg'
+              }
             ].map((event, index) => (
               <div
                 key={index}
@@ -179,13 +179,13 @@ function EventsContent() {
                 whatsappLinks: [
                   {
                     name: 'Harrison',
-                    link: 'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6',
+                    link: 'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6'
                   },
                   {
                     name: 'Jersey City',
-                    link: 'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02',
-                  },
-                ],
+                    link: 'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02'
+                  }
+                ]
               },
               {
                 day: 'Date : On session by session basis',
@@ -193,7 +193,7 @@ function EventsContent() {
                 description: 'TOPIC : On session by session basis',
                 time: 'Timing : On session by session basis',
                 location: 'Online via Zoom',
-                contact: '+1 516 979 6593 (Akhil)',
+                contact: '+1 516 979 6593 (Akhil)'
               },
               {
                 day: 'Every Sunday',
@@ -202,8 +202,8 @@ function EventsContent() {
                   'Scientific understanding of Bhagavad Gita via verse by verse discourses',
                 time: '6:50pm-8:30pm',
                 location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
-                whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
-              },
+                whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg'
+              }
             ].map((event, index) => (
               <div
                 key={index}

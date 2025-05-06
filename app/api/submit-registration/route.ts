@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       contactExtension,
       contactNumber,
       isWhatsappSameAsContact,
-      isAttendancePage,
+      isAttendancePage
     } = body;
 
     // Format phone numbers with country code and wrap in single quotes to force text format
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees', // Get all data
+      range: 'MYF attendees' // Get all data
     });
 
     const rows = response.data.values || [];
@@ -117,7 +117,7 @@ export async function POST(req: Request) {
       const rowNumber = existingRowIndex + 1;
 
       console.log(
-        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`,
+        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`
       );
 
       // Copy data validation and set "Registered" value
@@ -132,20 +132,20 @@ export async function POST(req: Request) {
                   startRowIndex: 5,
                   endRowIndex: 6,
                   startColumnIndex: MYFIndex - 2,
-                  endColumnIndex: MYFIndex - 1,
+                  endColumnIndex: MYFIndex - 1
                 },
                 destination: {
                   sheetId: 0,
                   startRowIndex: rowNumber - 1,
                   endRowIndex: rowNumber,
                   startColumnIndex: MYFIndex,
-                  endColumnIndex: MYFIndex + 1,
+                  endColumnIndex: MYFIndex + 1
                 },
-                pasteType: 'PASTE_DATA_VALIDATION',
-              },
-            },
-          ],
-        },
+                pasteType: 'PASTE_DATA_VALIDATION'
+              }
+            }
+          ]
+        }
       });
 
       const updateResponse = await sheets.spreadsheets.values.update({
@@ -153,8 +153,8 @@ export async function POST(req: Request) {
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [[status]],
-        },
+          values: [[status]]
+        }
       });
 
       console.log(`Update response: ${JSON.stringify(updateResponse.data)}`); // Log the response from the update
@@ -183,13 +183,13 @@ export async function POST(req: Request) {
                     sheetId: 0,
                     dimension: 'ROWS',
                     startIndex: currentRowCount, // Insert at the end
-                    endIndex: currentRowCount + 1, // Insert one row
+                    endIndex: currentRowCount + 1 // Insert one row
                   },
-                  inheritFromBefore: true,
-                },
-              },
-            ],
-          },
+                  inheritFromBefore: true
+                }
+              }
+            ]
+          }
         });
       }
 
@@ -201,22 +201,22 @@ export async function POST(req: Request) {
           data: [
             {
               range: `MYF attendees!${nameColumn}${rows.length + 1}`,
-              values: [[formattedName]],
+              values: [[formattedName]]
             },
             {
               range: `MYF attendees!${contactColumn}${rows.length + 1}`,
-              values: [[contactNumbers]],
+              values: [[contactNumbers]]
             },
             {
               range: `MYF attendees!${locationColumn}${rows.length + 1}`,
-              values: [[schoolOrganization]],
+              values: [[schoolOrganization]]
             },
             {
               range: `MYF attendees!${genderColumn}${rows.length + 1}`,
-              values: [[gender]],
-            },
-          ],
-        },
+              values: [[gender]]
+            }
+          ]
+        }
       });
 
       // Proceed with the existing batch update for data validation
@@ -231,20 +231,20 @@ export async function POST(req: Request) {
                   startRowIndex: 1,
                   endRowIndex: 2,
                   startColumnIndex: MYFIndex - 2,
-                  endColumnIndex: MYFIndex - 1,
+                  endColumnIndex: MYFIndex - 1
                 },
                 destination: {
                   sheetId: 0,
                   startRowIndex: rowNumber - 1, // Use the original row number
                   endRowIndex: rowNumber,
                   startColumnIndex: MYFIndex,
-                  endColumnIndex: MYFIndex + 1,
+                  endColumnIndex: MYFIndex + 1
                 },
-                pasteType: 'PASTE_DATA_VALIDATION',
-              },
-            },
-          ],
-        },
+                pasteType: 'PASTE_DATA_VALIDATION'
+              }
+            }
+          ]
+        }
       });
 
       // Wait 500ms to ensure data validation is applied before updating the value
@@ -257,8 +257,8 @@ export async function POST(req: Request) {
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [[status]],
-        },
+          values: [[status]]
+        }
       });
 
       console.log('Status update response:', updateResponse.data);

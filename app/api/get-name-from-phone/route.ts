@@ -23,7 +23,7 @@ export async function GET(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees',
+      range: 'MYF attendees'
     });
 
     const rows = response.data.values || [];
@@ -53,14 +53,14 @@ export async function GET(req: Request) {
       const contactNumbers = contact.split(/[,/]/).map((num: string) => num.trim());
 
       return contactNumbers.some((contact: string) =>
-        contact.slice(-5).includes(phoneNumber.slice(-4)),
+        contact.slice(-5).includes(phoneNumber.slice(-4))
       ); // Check if last 4 digits are a substring of any contact number
     });
 
     if (!foundEntry) {
       return NextResponse.json(
         { message: 'No entry found for the provided phone number' },
-        { status: 404 },
+        { status: 404 }
       );
     }
 

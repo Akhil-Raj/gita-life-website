@@ -31,7 +31,7 @@ export default function Home() {
     'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/PXL_20221022_004854519.jpg',
     'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/IMG-20230330-WA0002.jpg',
     'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/IMG-20220929-WA0001.jpg',
-    'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/IMG-20221126-WA0002.jpg',
+    'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/IMG-20221126-WA0002.jpg'
   ];
 
   const totalPages = Math.ceil(galleryImages.length / imagesPerPage);
@@ -89,28 +89,28 @@ export default function Home() {
                 description:
                   'Join our weekly gatherings for spiritual discussions and community bonding.',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/PXL_20220704_174651386.MP.jpg/:/cr=t:0.48%25,l:0%25,w:100%25,h:88.89%25/rs=w:600,h:300,cg:true',
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/PXL_20220704_174651386.MP.jpg/:/cr=t:0.48%25,l:0%25,w:100%25,h:88.89%25/rs=w:600,h:300,cg:true'
               },
               {
                 title: 'Courses',
                 description: 'Explore our in-depth courses on Bhagavad Gita and Vedic philosophy.',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/buddhist-monk-sits-in-yoga-lotus-position-medi.jpg/:/cr=t:2.94%25,l:0%25,w:100%25,h:94.12%25/rs=w:600,h:300,cg:true',
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/buddhist-monk-sits-in-yoga-lotus-position-medi.jpg/:/cr=t:2.94%25,l:0%25,w:100%25,h:94.12%25/rs=w:600,h:300,cg:true'
               },
               {
                 title: 'Mantra Meditation',
                 description:
                   'Learn and practice ancient mantra meditation techniques for inner peace.',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/169545636_3860992770681217_5229668540860906963.jpg/:/cr=t:5.56%25,l:0%25,w:100%25,h:88.89%25/rs=w:600,h:300,cg:true',
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/169545636_3860992770681217_5229668540860906963.jpg/:/cr=t:5.56%25,l:0%25,w:100%25,h:88.89%25/rs=w:600,h:300,cg:true'
               },
               {
                 title: 'Applied Spirituality for Practical Utility',
                 description:
                   'Discover how to apply spiritual principles in your daily life for practical benefits.',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/PXL_20221106_191127352.MP.jpg/:/rs=w:600,h:300,cg:true,m/cr=w:600,h:300',
-              },
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/PXL_20221106_191127352.MP.jpg/:/rs=w:600,h:300,cg:true,m/cr=w:600,h:300'
+              }
             ].map((offering, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="relative w-full pt-[56.25%]">
@@ -190,26 +190,26 @@ export default function Home() {
                 quote: 'Course sparked newfound creativity in game design.',
                 author: 'Akshay',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_01.5-f9d0af7.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true',
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_01.5-f9d0af7.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true'
               },
               {
                 quote: 'Balanced work, life, and inner peace thanks to this course.',
                 author: 'Somnath',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_02.5.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true',
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_02.5.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true'
               },
               {
                 quote: 'NYU journey enlightened by deep wisdom and insight.',
                 author: 'Rajesh',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_03.5.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true',
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_03.5.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true'
               },
               {
                 quote: 'Starting my spiritual journey with newfound understanding.',
                 author: 'Manoj',
                 image:
-                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_04.5.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true',
-              },
+                  'https://img1.wsimg.com/isteam/ip/3458a644-d186-438f-9ee3-59650cd81b43/Testimonials_04.5.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:365,h:365,cg:true'
+              }
             ].map((testimonial, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md flex items-center">
                 <img

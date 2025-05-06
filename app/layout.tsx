@@ -6,21 +6,21 @@ import Header from './components/Header';
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
   variable: '--font-geist-sans',
-  weight: '100 900',
+  weight: '100 900'
 });
 const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
-  weight: '100 900',
+  weight: '100 900'
 });
 
 export const metadata: Metadata = {
   title: 'Gita Life NYC',
-  description: 'Explore the teachings of Bhagavad Gita in New York City',
+  description: 'Explore the teachings of Bhagavad Gita in New York City'
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {

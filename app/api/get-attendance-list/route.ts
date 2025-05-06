@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -27,7 +27,7 @@ export async function GET(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID, // Ensure this is set in your environment
-      range: 'MYF attendees', // Get all data
+      range: 'MYF attendees' // Get all data
     });
 
     const rows = response.data.values || [];
@@ -60,7 +60,7 @@ export async function GET(req: Request) {
 
         return {
           name,
-          contactNumbers,
+          contactNumbers
         };
       })
       .filter(entry => entry !== null);
