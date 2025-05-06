@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -35,27 +35,28 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees',
+      range: 'MYF attendees'
     });
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find index for the "Contact" and "Jan MYF" columns
     const contactIndex = headers.findIndex(header => header === 'Contact');
-    const statusIndex = headers.findIndex(header => header === 'April MYF(2025)');
+    const statusIndex = headers.findIndex(header => header === 'May MYF(2025)');
 
     if (contactIndex === -1 || statusIndex === -1) {
-      throw new Error('"Contact" or "March MYF" column not found');
+      throw new Error('"Contact" or "May MYF" column not found');
     }
 
     // Find the row for the given contact number
     const rowIndex = rows.findIndex(row => {
-      const contactNumbers = row[contactIndex].split(/[,/]/)
-      return contactNumbers.some((contactNumber: string) => contactNumber.slice(-5).includes(contact.slice(-4)));
+      const contactNumbers = row[contactIndex].split(/[,/]/);
+      return contactNumbers.some((contactNumber: string) =>
+        contactNumber.slice(-5).includes(contact.slice(-4))
+      );
       // row[contactIndex].includes(contact.slice(-4))
-    }
-    );
+    });
     // const normalizePhoneNumber = (number: string) => {
     //   return number.replace(/\D/g, ''); // Remove non-numeric characters
     // };
@@ -78,8 +79,8 @@ export async function POST(req: Request) {
       range: `MYF attendees!${targetColumn}${rowNumber}`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [['Registered']],
-      },
+        values: [['Registered']]
+      }
     });
 
     return NextResponse.json({ message: 'Registration marked as Registered' }, { status: 200 });
@@ -97,4 +98,4 @@ const getColumnLetter = (index: number) => {
     index = Math.floor(index / 26) - 1;
   }
   return letter;
-}; 
+};

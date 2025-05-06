@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -35,18 +35,18 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees',
+      range: 'MYF attendees'
     });
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find index for the "Name" and "[Month] MYF" columns
     const nameIndex = headers.findIndex(header => header === 'Name');
-    const statusIndex = headers.findIndex(header => header === 'April MYF(2025)');
+    const statusIndex = headers.findIndex(header => header === 'May MYF(2025)');
 
     if (nameIndex === -1 || statusIndex === -1) {
-      throw new Error('"Name" or "April MYF(2025)" column not found');
+      throw new Error('"Name" or "May MYF(2025)" column not found');
     }
 
     // Find the row for the given name
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
       range: `MYF attendees!${targetColumn}${rowNumber}`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [['Present']],
-      },
+        values: [['Present']]
+      }
     });
 
     return NextResponse.json({ message: 'Attendance marked as Present' }, { status: 200 });
@@ -83,4 +83,4 @@ const getColumnLetter = (index: number) => {
     index = Math.floor(index / 26) - 1;
   }
   return letter;
-}; 
+};

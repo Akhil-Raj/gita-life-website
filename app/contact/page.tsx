@@ -1,14 +1,23 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { FaWhatsapp, FaPhone, FaMapMarkerAlt, FaInstagram, FaYoutube, FaCalendarAlt, FaClock, FaInfoCircle } from 'react-icons/fa';
+import {
+  FaWhatsapp,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaInstagram,
+  FaYoutube,
+  FaCalendarAlt,
+  FaClock,
+  FaInfoCircle
+} from 'react-icons/fa';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
@@ -27,9 +36,9 @@ export default function Contact() {
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
@@ -47,30 +56,37 @@ export default function Contact() {
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
-      
       <main className="flex-grow container mx-auto p-8">
         <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">Contact Us</h1>
-        
+
         <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
           <p className="text-xl mb-6 text-center text-gray-600">
             Seeking spiritual wisdom? Ready to explore the timeless teachings of the Bhagavad Gita?
           </p>
-          
+
           <div className="flex justify-center items-center gap-8 mb-8">
-            <Link href="https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg" 
-                  className="text-green-600 hover:text-green-700 transition duration-300">
+            <Link
+              href="https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg"
+              className="text-green-600 hover:text-green-700 transition duration-300"
+            >
               <FaWhatsapp className="text-3xl" />
             </Link>
-            <a href="tel:+19296310021" 
-               className="text-blue-600 hover:text-blue-700 transition duration-300">
+            <a
+              href="tel:+19296310021"
+              className="text-blue-600 hover:text-blue-700 transition duration-300"
+            >
               <FaPhone className="text-3xl" />
             </a>
-            <Link href="https://www.instagram.com/gitalifenyc/" 
-                  className="text-pink-600 hover:text-pink-700 transition duration-300">
+            <Link
+              href="https://www.instagram.com/gitalifenyc/"
+              className="text-pink-600 hover:text-pink-700 transition duration-300"
+            >
               <FaInstagram className="text-3xl" />
             </Link>
-            <Link href="https://www.youtube.com/@gitalifenyc" 
-                  className="text-red-600 hover:text-red-700 transition duration-300">
+            <Link
+              href="https://www.youtube.com/@gitalifenyc"
+              className="text-red-600 hover:text-red-700 transition duration-300"
+            >
               <FaYoutube className="text-3xl" />
             </Link>
           </div>
@@ -78,10 +94,12 @@ export default function Contact() {
           <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
             {/* Left column: Map */}
             <div className="w-full md:w-1/2">
-              <h2 className="text-2xl font-semibold mb-2 text-gray-800 text-center">Gita Life NYC</h2>
+              <h2 className="text-2xl font-semibold mb-2 text-gray-800 text-center">
+                Gita Life NYC
+              </h2>
               <p className="flex items-center justify-center text-gray-600 mb-4">
                 <FaMapMarkerAlt className="mr-2 text-red-500" />
-                 305 Schermerhorn Street, Brooklyn, New York 11217, United States
+                305 Schermerhorn Street, Brooklyn, New York 11217, United States
               </p>
               <div className="w-full h-64 md:h-96">
                 <iframe
@@ -98,10 +116,14 @@ export default function Contact() {
 
             {/* Right column: Contact form */}
             <div className="w-full md:w-1/2">
-              <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Get in Touch!</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
+                Get in Touch!
+              </h2>
               <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label htmlFor="name" className="block mb-2 text-gray-700">Name</label>
+                  <label htmlFor="name" className="block mb-2 text-gray-700">
+                    Name
+                  </label>
                   <input
                     type="text"
                     id="name"
@@ -112,7 +134,9 @@ export default function Contact() {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="email" className="block mb-2 text-gray-700">Email*</label>
+                  <label htmlFor="email" className="block mb-2 text-gray-700">
+                    Email*
+                  </label>
                   <input
                     type="email"
                     id="email"
@@ -124,7 +148,9 @@ export default function Contact() {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="message" className="block mb-2 text-gray-700">Message</label>
+                  <label htmlFor="message" className="block mb-2 text-gray-700">
+                    Message
+                  </label>
                   <textarea
                     id="message"
                     name="message"
@@ -147,13 +173,22 @@ export default function Contact() {
                   >
                     {isSubmitting ? 'Sending...' : 'Send'}
                   </button>
-                  <button type="button" className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition duration-300">Cancel</button>
+                  <button
+                    type="button"
+                    className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 transition duration-300"
+                  >
+                    Cancel
+                  </button>
                 </div>
                 {submitStatus === 'success' && (
-                  <p className="mt-4 text-green-600 text-center">Your message has been sent successfully!</p>
+                  <p className="mt-4 text-green-600 text-center">
+                    Your message has been sent successfully!
+                  </p>
                 )}
                 {submitStatus === 'error' && (
-                  <p className="mt-4 text-red-600 text-center">There was an error sending your message. Please try again later.</p>
+                  <p className="mt-4 text-red-600 text-center">
+                    There was an error sending your message. Please try again later.
+                  </p>
                 )}
               </form>
             </div>
@@ -164,7 +199,9 @@ export default function Contact() {
       <footer className="bg-gray-800 text-white py-8 mt-12">
         <div className="container mx-auto px-4 text-center">
           <p className="mb-2">Gita Life NYC</p>
-          <p className="text-sm text-gray-400">Copyright © 2024 GitaLifeNYC - All Rights Reserved.</p>
+          <p className="text-sm text-gray-400">
+            Copyright © 2024 GitaLifeNYC - All Rights Reserved.
+          </p>
         </div>
       </footer>
     </div>

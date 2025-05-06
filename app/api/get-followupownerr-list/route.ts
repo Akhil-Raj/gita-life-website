@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -27,32 +27,36 @@ export async function GET(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID, // Ensure this is set in your environment
-      range: 'MYF attendees', // Get all data
+      range: 'MYF attendees' // Get all data
     });
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find indices for both Name and Contact columns
     const nameIndex = headers.findIndex(header => header === 'Name');
     const contactIndex = headers.findIndex(header => header === 'Contact');
-    
+
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
 
     // Extract names and contact numbers, process them together
-    const namesWithContacts = rows.slice(1)
+    const namesWithContacts = rows
+      .slice(1)
       .map(row => {
         const name = row[nameIndex];
         const contact = row[contactIndex];
-        
+
         if (!name) return null;
 
         // Process contact numbers (split by ',' or '/')
-        const contactNumbers = contact ? contact.split(/[,/]/)
-          .map((num: string) => num.trim())
-          .map((num: string) => num.slice(-4))
-          .filter((num: string) => num) : [];
+        const contactNumbers = contact
+          ? contact
+              .split(/[,/]/)
+              .map((num: string) => num.trim())
+              .map((num: string) => num.slice(-4))
+              .filter((num: string) => num)
+          : [];
 
         return {
           name,

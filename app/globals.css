@@ -23,7 +23,7 @@ body {
 /* Add this to your existing styles */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #CBD5E0 #EDF2F7;
+  scrollbar-color: #cbd5e0 #edf2f7;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -31,11 +31,11 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #EDF2F7;
+  background: #edf2f7;
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #CBD5E0;
+  background-color: #cbd5e0;
   border-radius: 3px;
 }

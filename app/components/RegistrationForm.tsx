@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 
@@ -38,7 +38,7 @@ const COUNTRY_CODES = [
   { code: '+91', country: 'India' },
   { code: '+1', country: 'USA' },
   { code: '+44', country: 'UK' },
-  
+
   // Other major ISKCON-connected countries
   { code: '+61', country: 'Australia' },
   { code: '+880', country: 'Bangladesh' },
@@ -65,7 +65,7 @@ const COUNTRY_CODES = [
   { code: '+46', country: 'Sweden' },
   { code: '+66', country: 'Thailand' },
   { code: '+380', country: 'Ukraine' },
-  
+
   // Rest of the world (alphabetically)
   { code: '+93', country: 'Afghanistan' },
   { code: '+355', country: 'Albania' },
@@ -151,7 +151,11 @@ const COUNTRY_CODES = [
   { code: '+263', country: 'Zimbabwe' }
 ];
 
-export default function RegistrationForm({ onClose, isAttendancePage = false, onSuccess }: RegistrationFormProps) {
+export default function RegistrationForm({
+  onClose,
+  isAttendancePage = false,
+  onSuccess
+}: RegistrationFormProps) {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     gender: '',
@@ -160,7 +164,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
     schoolOrganization: '',
     contactExtension: '+1',
     contactNumber: '',
-    isWhatsappSameAsContact: false,
+    isWhatsappSameAsContact: false
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -211,7 +215,8 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
     if (!schoolOrgTrimmed) {
       newErrors.schoolOrganization = 'School/Organization is required';
     } else if (!/^[a-zA-Z0-9\s'.,-]{2,100}$/.test(schoolOrgTrimmed)) {
-      newErrors.schoolOrganization = 'Please enter a valid school or organization name (2-100 characters)';
+      newErrors.schoolOrganization =
+        'Please enter a valid school or organization name (2-100 characters)';
     }
 
     setErrors(newErrors);
@@ -220,7 +225,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
+
     // Clear error when field is being edited
     setErrors(prev => ({ ...prev, [name]: undefined }));
 
@@ -231,7 +236,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
         [name]: checked,
         ...(name === 'isWhatsappSameAsContact' && checked
           ? { contactNumber: prevData.whatsappNumber, contactExtension: prevData.whatsappExtension }
-          : {}),
+          : {})
       }));
     } else if (name === 'whatsappNumber' || name === 'contactNumber') {
       // Only allow digits in phone number fields
@@ -241,7 +246,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
         [name]: sanitizedValue,
         ...(name === 'whatsappNumber' && prevData.isWhatsappSameAsContact
           ? { contactNumber: sanitizedValue }
-          : {}),
+          : {})
       }));
     } else {
       setFormData(prevData => ({
@@ -250,16 +255,16 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
         ...(name.includes('whatsapp') && prevData.isWhatsappSameAsContact
           ? {
               contactNumber: name === 'whatsappNumber' ? value : prevData.contactNumber,
-              contactExtension: name === 'whatsappExtension' ? value : prevData.contactExtension,
+              contactExtension: name === 'whatsappExtension' ? value : prevData.contactExtension
             }
-          : {}),
+          : {})
       }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -270,12 +275,12 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
       const response = await fetch('/api/submit-registration', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           ...formData,
           isAttendancePage
-        }),
+        })
       });
 
       if (response.ok) {
@@ -283,7 +288,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
           onSuccess();
         }
         setNotification({
-          message: isAttendancePage 
+          message: isAttendancePage
             ? 'Registration successful! User has been registered and marked as present.'
             : 'Registration successful! Thank you for registering.',
           type: 'success'
@@ -316,21 +321,27 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
     <>
       {notification && (
         <div
-          className={`fixed top-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg max-w-md z-[10000] ${
-            notification.type === 'success'
-              ? 'bg-green-500 text-white'
-              : 'bg-red-500 text-white'
-          }`}
+          className={`fixed top-4 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg max-w-md z-[10000] ${notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
           role="alert"
         >
           <div className="flex items-center">
             {notification.type === 'success' ? (
               <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             ) : (
               <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             )}
             <p>{notification.message}</p>
@@ -340,17 +351,22 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
               aria-label="Close"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
         </div>
       )}
-      
+
       <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] p-4 backdrop-blur-sm">
-        <div 
+        <div
           className="bg-white rounded-xl w-full max-w-2xl relative shadow-2xl transform transition-all duration-300 scale-100"
-          onClick={(e) => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
           {/* Close button */}
           <button
@@ -359,7 +375,12 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
             aria-label="Close modal"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
@@ -383,9 +404,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${
-                    errors.name ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
                 />
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
@@ -436,9 +455,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                     value={formData.whatsappNumber}
                     onChange={handleChange}
                     required
-                    className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${
-                      errors.whatsappNumber ? 'border-red-500' : 'border-gray-300'
-                    }`}
+                    className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.whatsappNumber ? 'border-red-500' : 'border-gray-300'}`}
                   />
                 </div>
                 {errors.whatsappNumber && (
@@ -487,9 +504,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                       value={formData.contactNumber}
                       onChange={handleChange}
                       required
-                      className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${
-                        errors.contactNumber ? 'border-red-500' : 'border-gray-300'
-                      }`}
+                      className={`flex-1 px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.contactNumber ? 'border-red-500' : 'border-gray-300'}`}
                     />
                   </div>
                   {errors.contactNumber && (
@@ -500,7 +515,10 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
 
               {/* School/Organization Field */}
               <div>
-                <label htmlFor="schoolOrganization" className="block mb-2 text-gray-800 font-medium">
+                <label
+                  htmlFor="schoolOrganization"
+                  className="block mb-2 text-gray-800 font-medium"
+                >
                   School/Organization <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -510,9 +528,7 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                   value={formData.schoolOrganization}
                   onChange={handleChange}
                   required
-                  className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${
-                    errors.schoolOrganization ? 'border-red-500' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-saffron focus:border-transparent transition-all duration-300 ${errors.schoolOrganization ? 'border-red-500' : 'border-gray-300'}`}
                 />
                 {errors.schoolOrganization && (
                   <p className="text-red-500 text-sm mt-1">{errors.schoolOrganization}</p>
@@ -534,9 +550,25 @@ export default function RegistrationForm({ onClose, isAttendancePage = false, on
                   className="px-6 py-2.5 bg-saffron text-white rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
                 >
                   {isSubmitting ? (
-                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                   ) : (
                     'Submit'

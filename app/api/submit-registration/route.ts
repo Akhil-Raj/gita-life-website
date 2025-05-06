@@ -26,8 +26,8 @@ export async function POST(req: Request) {
 
     // Format phone numbers with country code and wrap in single quotes to force text format
     const formattedWhatsApp = `'${whatsappExtension}${whatsappNumber}'`;
-    const formattedContact = isWhatsappSameAsContact 
-      ? formattedWhatsApp 
+    const formattedContact = isWhatsappSameAsContact
+      ? formattedWhatsApp
       : `'${contactExtension}${contactNumber}'`;
 
     // Combine numbers if they're different
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -60,24 +60,24 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees', // Get all data
+      range: 'MYF attendees' // Get all data
     });
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find indices for all required columns
     const nameIndex = headers.findIndex(header => header === 'Name');
     const contactIndex = headers.findIndex(header => header === 'Contact');
     const locationIndex = headers.findIndex(header => header === 'Location');
     const genderIndex = headers.findIndex(header => header === 'Gender');
-    const MYFIndex = headers.findIndex(header => header === 'April MYF(2025)');
+    const MYFIndex = headers.findIndex(header => header === 'May MYF(2025)');
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
     if (locationIndex === -1) throw new Error('"Location" column not found');
-    if (MYFIndex === -1) throw new Error('"April MYF(2025)" column not found');
+    if (MYFIndex === -1) throw new Error('"May MYF(2025)" column not found');
 
     // Get column letters (keep existing getColumnLetter function)
     const getColumnLetter = (index: number) => {
@@ -99,8 +99,10 @@ export async function POST(req: Request) {
       const contactCell = rows[i][contactIndex] || '';
       // Remove all non-digit characters for comparison
       const cellDigits = contactCell.replace(/\D/g, '');
-      if (cellDigits.includes(whatsappNumberOnly) || 
-          (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))) {
+      if (
+        cellDigits.includes(whatsappNumberOnly) ||
+        (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))
+      ) {
         existingRowIndex = i;
         break;
       }
@@ -114,7 +116,9 @@ export async function POST(req: Request) {
       const targetColumn = getColumnLetter(MYFIndex);
       const rowNumber = existingRowIndex + 1;
 
-      console.log(`Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`);
+      console.log(
+        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`
+      );
 
       // Copy data validation and set "Registered" value
       await sheets.spreadsheets.batchUpdate({
@@ -128,20 +132,20 @@ export async function POST(req: Request) {
                   startRowIndex: 5,
                   endRowIndex: 6,
                   startColumnIndex: MYFIndex - 2,
-                  endColumnIndex: MYFIndex - 1,
+                  endColumnIndex: MYFIndex - 1
                 },
                 destination: {
                   sheetId: 0,
                   startRowIndex: rowNumber - 1,
                   endRowIndex: rowNumber,
                   startColumnIndex: MYFIndex,
-                  endColumnIndex: MYFIndex + 1,
+                  endColumnIndex: MYFIndex + 1
                 },
-                pasteType: 'PASTE_DATA_VALIDATION',
-              },
-            },
-          ],
-        },
+                pasteType: 'PASTE_DATA_VALIDATION'
+              }
+            }
+          ]
+        }
       });
 
       const updateResponse = await sheets.spreadsheets.values.update({
@@ -149,18 +153,17 @@ export async function POST(req: Request) {
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [[status]],
-        },
+          values: [[status]]
+        }
       });
 
       console.log(`Update response: ${JSON.stringify(updateResponse.data)}`); // Log the response from the update
-
     } else {
       // Case 2: Number doesn't exist, append new row
       const nameColumn = getColumnLetter(nameIndex);
       const contactColumn = getColumnLetter(contactIndex);
       const locationColumn = getColumnLetter(locationIndex);
-      const genderColumn = getColumnLetter(genderIndex)
+      const genderColumn = getColumnLetter(genderIndex);
 
       // Copy data validation and set "Registered" for the new row
       const rowNumber = rows.length + 1;
@@ -180,13 +183,13 @@ export async function POST(req: Request) {
                     sheetId: 0,
                     dimension: 'ROWS',
                     startIndex: currentRowCount, // Insert at the end
-                    endIndex: currentRowCount + 1, // Insert one row
+                    endIndex: currentRowCount + 1 // Insert one row
                   },
-                  inheritFromBefore: true,
-                },
-              },
-            ],
-          },
+                  inheritFromBefore: true
+                }
+              }
+            ]
+          }
         });
       }
 
@@ -228,25 +231,24 @@ export async function POST(req: Request) {
                   startRowIndex: 1,
                   endRowIndex: 2,
                   startColumnIndex: MYFIndex - 2,
-                  endColumnIndex: MYFIndex - 1,
+                  endColumnIndex: MYFIndex - 1
                 },
                 destination: {
                   sheetId: 0,
                   startRowIndex: rowNumber - 1, // Use the original row number
                   endRowIndex: rowNumber,
                   startColumnIndex: MYFIndex,
-                  endColumnIndex: MYFIndex + 1,
+                  endColumnIndex: MYFIndex + 1
                 },
-                pasteType: 'PASTE_DATA_VALIDATION',
-              },
-            },
-          ],
-        },
+                pasteType: 'PASTE_DATA_VALIDATION'
+              }
+            }
+          ]
+        }
       });
 
       // Wait 500ms to ensure data validation is applied before updating the value
       await new Promise(resolve => setTimeout(resolve, 500));
-
 
       // After ensuring the row is added, proceed with the existing batch update for data validation
       const targetColumn = getColumnLetter(MYFIndex);
@@ -255,10 +257,10 @@ export async function POST(req: Request) {
         range: `MYF attendees!${targetColumn}${rowNumber}`,
         valueInputOption: 'USER_ENTERED',
         requestBody: {
-          values: [[status]],
-        },
+          values: [[status]]
+        }
       });
-      
+
       console.log('Status update response:', updateResponse.data);
     }
 

@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     // Initialize auth with properly formatted credentials
     const auth = new google.auth.GoogleAuth({
       credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly']
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
@@ -29,12 +29,12 @@ export async function POST(req: Request) {
     // Get all headers and data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'MYF attendees',
+      range: 'MYF attendees'
     });
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find indices for Followup owner column
     const followupOwnerIndex = headers.findIndex(header => header === 'Followup owner');
 
@@ -43,7 +43,8 @@ export async function POST(req: Request) {
     const specificFollowupOwner = 'AADk'; // This could be dynamically set based on your requirements
 
     // Extract all data, filtering by Followup owner
-    const filteredData = rows.slice(1)
+    const filteredData = rows
+      .slice(1)
       .filter(row => {
         const currentFollowupOwner = row[followupOwnerIndex]; // Get the followup owner for the current row
         return currentFollowupOwner && currentFollowupOwner === followupOwner; // Filter by specific Followup owner
