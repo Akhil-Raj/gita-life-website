@@ -12,28 +12,14 @@ if (!process.env.GOOGLE_SHEET_ID) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const {
-      name,
-      gender,
-      whatsappExtension,
-      whatsappNumber,
-      schoolOrganization,
-      contactExtension,
-      contactNumber,
-      isWhatsappSameAsContact,
-      isAttendancePage,
-    } = body;
+    const { name, gender, whatsappExtension, whatsappNumber, schoolOrganization, contactExtension, contactNumber, isWhatsappSameAsContact, isAttendancePage } = body;
 
     // Format phone numbers with country code and wrap in single quotes to force text format
     const formattedWhatsApp = `'${whatsappExtension}${whatsappNumber}'`;
-    const formattedContact = isWhatsappSameAsContact
-      ? formattedWhatsApp
-      : `'${contactExtension}${contactNumber}'`;
+    const formattedContact = isWhatsappSameAsContact ? formattedWhatsApp : `'${contactExtension}${contactNumber}'`;
 
     // Combine numbers if they're different
-    const contactNumbers = isWhatsappSameAsContact
-      ? formattedWhatsApp
-      : `${formattedWhatsApp}, ${formattedContact}`;
+    const contactNumbers = isWhatsappSameAsContact ? formattedWhatsApp : `${formattedWhatsApp}, ${formattedContact}`;
 
     // Format name with gender in brackets
     const formattedName = `${name}`;
@@ -91,9 +77,7 @@ export async function POST(req: Request) {
 
     // Extract phone numbers without extensions for comparison
     const whatsappNumberOnly = whatsappNumber;
-    const contactNumberOnly = isWhatsappSameAsContact
-      ? whatsappNumber
-      : contactNumber;
+    const contactNumberOnly = isWhatsappSameAsContact ? whatsappNumber : contactNumber;
 
     // Check if either phone number exists in the Contact column
     let existingRowIndex = -1;
@@ -101,10 +85,7 @@ export async function POST(req: Request) {
       const contactCell = rows[i][contactIndex] || '';
       // Remove all non-digit characters for comparison
       const cellDigits = contactCell.replace(/\D/g, '');
-      if (
-        cellDigits.includes(whatsappNumberOnly) ||
-        (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))
-      ) {
+      if (cellDigits.includes(whatsappNumberOnly) || (!isWhatsappSameAsContact && cellDigits.includes(contactNumberOnly))) {
         existingRowIndex = i;
         break;
       }
@@ -118,9 +99,7 @@ export async function POST(req: Request) {
       const targetColumn = getColumnLetter(MYFIndex);
       const rowNumber = existingRowIndex + 1;
 
-      console.log(
-        `Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`,
-      );
+      console.log(`Updating existing row at index: ${existingRowIndex}, target column: ${targetColumn}, status: ${status}`);
 
       // Copy data validation and set "Registered" value
       await sheets.spreadsheets.batchUpdate({
@@ -266,15 +245,9 @@ export async function POST(req: Request) {
       console.log('Status update response:', updateResponse.data);
     }
 
-    return NextResponse.json(
-      { message: 'Registration successful' },
-      { status: 200 },
-    );
+    return NextResponse.json({ message: 'Registration successful' }, { status: 200 });
   } catch (error) {
     console.error('Error submitting registration:', error);
-    return NextResponse.json(
-      { message: 'Registration failed' },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: 'Registration failed' }, { status: 500 });
   }
 }

@@ -34,21 +34,22 @@ export async function POST(req: Request) {
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find indices for Followup owner column
-    const followupOwnerIndex = headers.findIndex(header => header === 'Followup owner');
+    const followupOwnerIndex = headers.findIndex((header) => header === 'Followup owner');
 
     if (followupOwnerIndex === -1) throw new Error('"Followup owner" column not found');
 
     const specificFollowupOwner = 'AADk'; // This could be dynamically set based on your requirements
 
     // Extract all data, filtering by Followup owner
-    const filteredData = rows.slice(1)
-      .filter(row => {
+    const filteredData = rows
+      .slice(1)
+      .filter((row) => {
         const currentFollowupOwner = row[followupOwnerIndex]; // Get the followup owner for the current row
         return currentFollowupOwner && currentFollowupOwner === followupOwner; // Filter by specific Followup owner
       })
-      .map(row => {
+      .map((row) => {
         const entry: Record<string, string | number> = {};
         headers.forEach((header, index) => {
           entry[header] = row[index]; // Create an object for each row with header as key

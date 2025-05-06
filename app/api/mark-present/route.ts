@@ -43,9 +43,7 @@ export async function POST(req: Request) {
 
     // Find index for the "Name" and "[Month] MYF" columns
     const nameIndex = headers.findIndex((header) => header === 'Name');
-    const statusIndex = headers.findIndex(
-      (header) => header === 'May MYF(2025)',
-    );
+    const statusIndex = headers.findIndex((header) => header === 'May MYF(2025)');
 
     if (nameIndex === -1 || statusIndex === -1) {
       throw new Error('"Name" or "May MYF(2025)" column not found');
@@ -70,16 +68,10 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(
-      { message: 'Attendance marked as Present' },
-      { status: 200 },
-    );
+    return NextResponse.json({ message: 'Attendance marked as Present' }, { status: 200 });
   } catch (error) {
     console.error('Error marking attendance:', error);
-    return NextResponse.json(
-      { message: 'Failed to mark attendance' },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: 'Failed to mark attendance' }, { status: 500 });
   }
 }
 

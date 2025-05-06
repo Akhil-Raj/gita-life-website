@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -21,14 +21,7 @@ const Header = () => {
         <ul className="flex flex-wrap justify-center space-x-2 sm:space-x-6">
           {['Home', 'Events', 'Contact', 'Donate'].map((item) => (
             <li key={item}>
-              <Link 
-                href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} 
-                className={`text-lg transition duration-300 px-3 py-2 rounded-full ${
-                  isActive(item === 'Home' ? '/' : `/${item.toLowerCase()}`)
-                    ? 'bg-white bg-opacity-30 text-indigo-900 font-semibold'
-                    : 'hover:text-indigo-900 hover:bg-white hover:bg-opacity-20'
-                }`}
-              >
+              <Link href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} className={`text-lg transition duration-300 px-3 py-2 rounded-full ${isActive(item === 'Home' ? '/' : `/${item.toLowerCase()}`) ? 'bg-white bg-opacity-30 text-indigo-900 font-semibold' : 'hover:text-indigo-900 hover:bg-white hover:bg-opacity-20'}`}>
                 {item}
               </Link>
             </li>

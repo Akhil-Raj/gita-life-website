@@ -32,34 +32,38 @@ export async function GET(req: Request) {
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find indices for both Name and Contact columns
-    const nameIndex = headers.findIndex(header => header === 'Name');
-    const contactIndex = headers.findIndex(header => header === 'Contact');
-    
+    const nameIndex = headers.findIndex((header) => header === 'Name');
+    const contactIndex = headers.findIndex((header) => header === 'Contact');
+
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
 
     // Extract names and contact numbers, process them together
-    const namesWithContacts = rows.slice(1)
-      .map(row => {
+    const namesWithContacts = rows
+      .slice(1)
+      .map((row) => {
         const name = row[nameIndex];
         const contact = row[contactIndex];
-        
+
         if (!name) return null;
 
         // Process contact numbers (split by ',' or '/')
-        const contactNumbers = contact ? contact.split(/[,/]/)
-          .map((num: string) => num.trim())
-          .map((num: string) => num.slice(-4))
-          .filter((num: string) => num) : [];
+        const contactNumbers = contact
+          ? contact
+              .split(/[,/]/)
+              .map((num: string) => num.trim())
+              .map((num: string) => num.slice(-4))
+              .filter((num: string) => num)
+          : [];
 
         return {
           name,
-          contactNumbers
+          contactNumbers,
         };
       })
-      .filter(entry => entry !== null);
+      .filter((entry) => entry !== null);
 
     return NextResponse.json({ entries: namesWithContacts }, { status: 200 });
   } catch (error) {

@@ -36,22 +36,21 @@ export async function GET(req: Request) {
 
     const rows = response.data.values || [];
     const headers = rows[0] || [];
-    
+
     // Find indices for both Name and Contact columns
-    const nameIndex = headers.findIndex(header => header === 'Name');
-    const contactIndex = headers.findIndex(header => header === 'Contact');
-    
+    const nameIndex = headers.findIndex((header) => header === 'Name');
+    const contactIndex = headers.findIndex((header) => header === 'Contact');
+
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
 
     // Search for the phone number in the contact column
-    const foundEntry = rows.slice(1).find(row => {
+    const foundEntry = rows.slice(1).find((row) => {
       const contact = row[contactIndex];
       if (!contact) return false;
 
       // Process contact numbers (split by ',' or '/')
-      const contactNumbers = contact.split(/[,/]/)
-        .map((num: string) => num.trim());
+      const contactNumbers = contact.split(/[,/]/).map((num: string) => num.trim());
 
       return contactNumbers.some((contact: string) => contact.slice(-5).includes(phoneNumber.slice(-4))); // Check if last 4 digits are a substring of any contact number
     });
@@ -66,4 +65,4 @@ export async function GET(req: Request) {
     console.error('Error fetching name:', error);
     return NextResponse.json({ message: 'Failed to fetch name' }, { status: 500 });
   }
-} 
+}

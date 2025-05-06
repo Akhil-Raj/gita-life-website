@@ -43,9 +43,7 @@ export async function POST(req: Request) {
 
     // Find index for the "Contact" and "Jan MYF" columns
     const contactIndex = headers.findIndex((header) => header === 'Contact');
-    const statusIndex = headers.findIndex(
-      (header) => header === 'May MYF(2025)',
-    );
+    const statusIndex = headers.findIndex((header) => header === 'May MYF(2025)');
 
     if (contactIndex === -1 || statusIndex === -1) {
       throw new Error('"Contact" or "May MYF" column not found');
@@ -54,9 +52,7 @@ export async function POST(req: Request) {
     // Find the row for the given contact number
     const rowIndex = rows.findIndex((row) => {
       const contactNumbers = row[contactIndex].split(/[,/]/);
-      return contactNumbers.some((contactNumber: string) =>
-        contactNumber.slice(-5).includes(contact.slice(-4)),
-      );
+      return contactNumbers.some((contactNumber: string) => contactNumber.slice(-5).includes(contact.slice(-4)));
       // row[contactIndex].includes(contact.slice(-4))
     });
     // const normalizePhoneNumber = (number: string) => {
@@ -85,16 +81,10 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(
-      { message: 'Registration marked as Registered' },
-      { status: 200 },
-    );
+    return NextResponse.json({ message: 'Registration marked as Registered' }, { status: 200 });
   } catch (error) {
     console.error('Error marking registration:', error);
-    return NextResponse.json(
-      { message: 'Failed to mark registration' },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: 'Failed to mark registration' }, { status: 500 });
   }
 }
 

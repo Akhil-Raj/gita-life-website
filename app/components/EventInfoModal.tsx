@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
@@ -25,16 +25,9 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
   return createPortal(
     <>
       <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[9999] p-4 backdrop-blur-sm">
-        <div 
-          className="bg-white rounded-xl w-full max-w-3xl relative shadow-2xl transform transition-all duration-300 scale-100 overflow-hidden max-h-[90vh]"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className="bg-white rounded-xl w-full max-w-3xl relative shadow-2xl transform transition-all duration-300 scale-100 overflow-hidden max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
           {/* Close button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-2 backdrop-blur-sm transition-all duration-300 z-10 shadow-lg"
-            aria-label="Close modal"
-          >
+          <button onClick={onClose} className="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full p-2 backdrop-blur-sm transition-all duration-300 z-10 shadow-lg" aria-label="Close modal">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -43,13 +36,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
           <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
             {/* Image Section */}
             <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
-              <Image
-                src="/MYF_Image.jpeg"
-                alt="Monthly Youth Festival"
-                fill
-                className="object-contain bg-gray-100"
-                priority
-              />
+              <Image src="/MYF_Image.jpeg" alt="Monthly Youth Festival" fill className="object-contain bg-gray-100" priority />
             </div>
 
             {/* Content Section */}
@@ -57,18 +44,10 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Monthly Youth Festival</h2>
               <div className="text-gray-700 space-y-6">
                 {/* Main Description */}
-                <div className="text-lg">
-                🌟 Gita Life NYC invites you for our Monthly Youth Festival! 🌟
-
-                Get ready for a day full of inspiration, joy, and unforgettable memories! 🎉
-
-                Join us for a spiritual journey.
-                </div>
+                <div className="text-lg">🌟 Gita Life NYC invites you for our Monthly Youth Festival! 🌟 Get ready for a day full of inspiration, joy, and unforgettable memories! 🎉 Join us for a spiritual journey.</div>
 
                 {/* Event Invitation */}
-                <div className="text-center font-medium text-xl">
-                🎉 Here’s why you’ll love it:
-                </div>
+                <div className="text-center font-medium text-xl">🎉 Here’s why you’ll love it:</div>
 
                 {/* What's Included Section */}
                 <div className="bg-orange-50 p-6 rounded-lg">
@@ -103,7 +82,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
 
                 {/* Call to Action */}
                 <div className="text-center text-lg font-medium">
-                ✨ It’s Free. It’s Fun. It’s Unforgettable. 🎁🎄 Bring your friends and let’s make this an evening to remember.
+                  ✨ It’s Free. It’s Fun. It’s Unforgettable. 🎁🎄 Bring your friends and let’s make this an evening to remember.
                   <div className="mt-2">We look forward to see you🌟🌟🌟</div>
                 </div>
 
@@ -120,10 +99,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
 
               {/* Registration Button */}
               <div className="mt-8 flex justify-center">
-                <button
-                  onClick={handleRegisterClick}
-                  className="px-8 py-3 bg-saffron text-white rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-md hover:shadow-lg font-semibold text-lg"
-                >
+                <button onClick={handleRegisterClick} className="px-8 py-3 bg-saffron text-white rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-md hover:shadow-lg font-semibold text-lg">
                   Register for Event
                 </button>
               </div>
@@ -133,10 +109,8 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
       </div>
 
       {/* Registration Form Modal */}
-      {showRegistrationForm && (
-        <RegistrationForm onClose={handleCloseRegistration} />
-      )}
+      {showRegistrationForm && <RegistrationForm onClose={handleCloseRegistration} />}
     </>,
     document.body
   );
-} 
+}
