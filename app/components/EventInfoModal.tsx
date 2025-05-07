@@ -52,7 +52,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                 src="/MYF_Image.jpeg"
                 alt="Monthly Youth Festival"
                 fill
-                className="object-contain bg-gray-100"
+                className="object-contain bg-gray-600"
                 priority
               />
             </div>
@@ -76,8 +76,8 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                   <h3 className="text-xl font-semibold mb-4">What's in it for you? ✨</h3>
                   <div className="grid grid-cols-2 gap-4 text-lg">
                     <div className="flex items-center gap-2">
-                      ✨ Enlightening Spiritual Talk by Tulasi Dasa (traveling monk, author, known
-                      for his ecstatic kirtans)
+                      ✨ Enlightening Spiritual Talk by Chaitanya Charan Das (spiritual scientist,
+                      author, international speaker)
                     </div>
                     <div className="flex items-center gap-2">
                       🎭 Drama Performances – Witness incredible performances that will touch your
@@ -93,13 +93,13 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                 </div>
 
                 {/* Date and Time */}
-                <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="bg-gray-200 p-6 rounded-lg">
                   <div className="flex justify-center gap-12 text-lg">
                     <div className="flex items-center gap-2">
                       <span className="text-2xl">🗓</span>
                       <div>
                         <div className="font-semibold">🗓️Date</div>
-                        <div>22nd February (Saturday)</div>
+                        <div>10th May (Saturday)</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -120,7 +120,7 @@ export default function EventInfoModal({ onClose }: EventInfoModalProps) {
                 </div>
 
                 {/* Important Notes */}
-                <div className="bg-blue-50 p-6 rounded-lg">
+                <div className="bg-blue-200 p-6 rounded-lg">
                   <h3 className="text-xl font-semibold mb-4">Important Notes ℹ️</h3>
                   <ul className="space-y-3 list-disc list-inside text-gray-700">
                     <li>This event is only for boys aged 18-30</li>
