@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
+import { col_name } from '@/lib/constants';
 
 if (!process.env.GOOGLE_SHEETS_CREDENTIALS) {
   throw new Error('GOOGLE_SHEETS_CREDENTIALS environment variable is not set');
@@ -71,13 +72,13 @@ export async function POST(req: Request) {
     const contactIndex = headers.findIndex(header => header === 'Contact');
     const locationIndex = headers.findIndex(header => header === 'Location');
     const genderIndex = headers.findIndex(header => header === 'Gender');
-    const MYFIndex = headers.findIndex(header => header === 'May MYF(2025)');
+    const MYFIndex = headers.findIndex(header => header === `${col_name}`);
 
     // Verify all required columns exist
     if (nameIndex === -1) throw new Error('"Name" column not found');
     if (contactIndex === -1) throw new Error('"Contact" column not found');
     if (locationIndex === -1) throw new Error('"Location" column not found');
-    if (MYFIndex === -1) throw new Error('"May MYF(2025)" column not found');
+    if (MYFIndex === -1) throw new Error(`${col_name} column not found`);
 
     // Get column letters (keep existing getColumnLetter function)
     const getColumnLetter = (index: number) => {

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
+import { col_name } from '@/lib/constants/index';
 
 if (!process.env.GOOGLE_SHEETS_CREDENTIALS) {
   throw new Error('GOOGLE_SHEETS_CREDENTIALS environment variable is not set');
@@ -43,10 +44,10 @@ export async function POST(req: Request) {
 
     // Find index for the "Name" and "[Month] MYF" columns
     const nameIndex = headers.findIndex(header => header === 'Name');
-    const statusIndex = headers.findIndex(header => header === 'May MYF(2025)');
+    const statusIndex = headers.findIndex(header => header === `${col_name}`);
 
     if (nameIndex === -1 || statusIndex === -1) {
-      throw new Error('"Name" or "May MYF(2025)" column not found');
+      throw new Error(`"Name" or ${col_name} column not found`);
     }
 
     // Find the row for the given name

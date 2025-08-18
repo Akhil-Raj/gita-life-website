@@ -46,7 +46,7 @@ function EventsContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                date: 'Saturday May 10, 2025',
+                date: 'Saturday August 23, 2025',
                 name: 'Monthly Youth Festival',
                 description: 'MORE INFO BOX',
                 time: '5:45pm onwards',
