@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { use } from 'react';
 
 export async function POST(request: Request) {
   const { username, password } = await request.json();
