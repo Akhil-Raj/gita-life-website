@@ -4,7 +4,8 @@ import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaInfoCircle } from 'react-icon
 import { useState, useEffect, Suspense } from 'react';
 import RegistrationForm from '../components/RegistrationForm';
 import { useSearchParams, useRouter } from 'next/navigation';
-import EventInfoModal from '../components/EventInfoModal';
+// import EventInfoModal from '../components/EventInfoModal';
+import Link from 'next/link';
 
 // Create a wrapper component that uses the hooks
 function EventsContent() {
@@ -41,12 +42,12 @@ function EventsContent() {
         <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">Events</h1>
 
         {/* Upcoming Events */}
-        <section className="mb-16">
+        {/*<section className="mb-16">
           <h2 className="text-3xl font-semibold mb-6 text-gray-800">Upcoming Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                date: 'Saturday August 23, 2025',
+                date: 'Saturday September 2, 2025',
                 name: 'Monthly Youth Festival',
                 description: 'MORE INFO BOX',
                 time: '5:45pm onwards',
@@ -121,6 +122,122 @@ function EventsContent() {
 
                       {showEventInfo && <EventInfoModal onClose={handleCloseEventInfo} />}
                     </>
+                  ) : (
+                    <p className="text-gray-700 mb-4">
+                      <FaInfoCircle className="inline-block mr-2 text-saffron" />
+                      {event.description}
+                    </p>
+                  )}
+                  {event.whatsappLink && (
+                    <a
+                      href={event.whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 font-semibold hover:underline block mb-4"
+                    >
+                      Join WhatsApp Group
+                    </a>
+                  )}
+                  {event.contact && (
+                    <p className="text-gray-700 mb-4">
+                      <strong>
+                        Contact:{' '}
+                        <a
+                          href={`tel:${event.contact.replace(/\D/g, '')}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          {event.contact}
+                        </a>
+                      </strong>
+                    </p>
+                  )}
+                  {event.registrationLink && (
+                    <a
+                      href="/events?register=true"
+                      className="bg-saffron text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg inline-block text-center"
+                    >
+                      Register for Event
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>*/}
+
+        <section className="mb-16">
+          <h2 className="text-3xl font-semibold mb-6 text-gray-800">Upcoming Events</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                date: 'Saturday September 20, 2025',
+                name: 'Monthly Youth Festival',
+                description: 'MORE INFO BOX',
+                time: '5:45pm onwards',
+                location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
+                whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg',
+                registrationLink: true
+              },
+              {
+                date: 'Every Saturday',
+                name: 'Jersey City Weekly Program',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '12:30-2:30pm',
+                location: '3287, JFK Boulevard, Jersey City, NJ',
+                whatsappLink: 'https://chat.whatsapp.com/DbvimUwcnBG4IcPxod9r02'
+              },
+              {
+                date: 'Every Saturday',
+                name: 'Harrison Weekly Program',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '3pm-5pm',
+                location: '600 FE, Rodgers Boulevard North. Harrison',
+                whatsappLink: 'https://chat.whatsapp.com/HZnWTh54J897KyQdlGpPv6'
+              },
+              {
+                date: 'Every Saturday',
+                name: 'NYU Weekly Program',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '6:30pm-9pm',
+                location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
+                contact: '+1 516 979 6593 (Akhil)'
+              },
+              {
+                date: 'Every Saturday',
+                name: 'Gita Class',
+                description: '[CONTACT FOR MORE INFO]',
+                time: '6:50pm-8:30pm',
+                location: 'ISKCON NYC - 305 Schermerhorn Street, Brooklyn, NY 11217',
+                whatsappLink: 'https://chat.whatsapp.com/DHsfTIftW5hGBgpW2jaoRg'
+              }
+            ].map((event, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-lg transform-gpu transition-transform duration-300 hover:scale-105"
+              >
+                <div className="bg-saffron text-white p-4">
+                  <h3 className="text-xl font-semibold">{event.name}</h3>
+                </div>
+                <div className="p-6">
+                  <p className="flex items-center text-gray-600 mb-2">
+                    <FaCalendarAlt className="mr-2 text-saffron" />
+                    {event.date}
+                  </p>
+                  <p className="flex items-center text-gray-600 mb-2">
+                    <FaClock className="mr-2 text-saffron" />
+                    {event.time}
+                  </p>
+                  <p className="flex items-center text-gray-600 mb-4">
+                    <FaMapMarkerAlt className="mr-2 text-saffron" />
+                    {event.location}
+                  </p>
+                  {event.description === 'MORE INFO BOX' ? (
+                    <Link
+                      href="/monthly-youth-festival"
+                      className="bg-saffron text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors duration-300 inline-block text-center mb-4"
+                    >
+                      More Info
+                    </Link>
                   ) : (
                     <p className="text-gray-700 mb-4">
                       <FaInfoCircle className="inline-block mr-2 text-saffron" />

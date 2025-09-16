@@ -6,9 +6,6 @@ export async function POST(request: Request) {
   const validUsername = process.env.ADMIN_USERNAME;
   const validPassword = process.env.ADMIN_PASSWORD;
 
-  console.log(validUsername, validPassword);
-  console.log(username, password);
-
   if (username === validUsername && password === validPassword) {
     return NextResponse.json({ message: 'Login successful' }, { status: 200 });
   } else {
