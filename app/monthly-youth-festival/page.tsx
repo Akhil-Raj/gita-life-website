@@ -431,7 +431,7 @@ export default function MonthlyYouthFestival() {
                     icon: '✨',
                     title: 'Spiritual Talk',
                     description:
-                      'Inspiring session by HG Jai Nitai Prabhu (Temple President, spiritual guide, and dynamic preacher)',
+                      'Inspiring session by HG Jagannath Gopal Prabhu (Vice President at Goldman Sachs and dedicated bhakti yoga preacher at ISKCON 26 2nd Avenue)',
                     gradient: 'from-yellow-100 to-orange-100',
                     border: 'border-yellow-200'
                   },
