@@ -295,6 +295,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import RegistrationForm from '../components/RegistrationForm';
 import Link from 'next/link';
+import { date } from '@/lib/constants';
 
 export default function MonthlyYouthFestival() {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
@@ -430,7 +431,7 @@ export default function MonthlyYouthFestival() {
                     icon: '✨',
                     title: 'Spiritual Talk',
                     description:
-                      'Inspiring session by HG Jai Nitai Prabhu (Temple President, spiritual guide, and dynamic preacher)',
+                      'Inspiring session by HG Jagannath Gopal Prabhu (Vice President at Goldman Sachs and dedicated bhakti yoga preacher at ISKCON 26 2nd Avenue)',
                     gradient: 'from-yellow-100 to-orange-100',
                     border: 'border-yellow-200'
                   },
@@ -490,7 +491,7 @@ export default function MonthlyYouthFestival() {
                 <div className="relative bg-gradient-to-r from-gray-100 to-slate-100 p-6 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl border border-gray-200 shadow-2xl">
                   <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 lg:gap-20">
                     {[
-                      { icon: '🗓', label: 'Date', value: '20th September', sub: '(Saturday)' },
+                      { icon: '🗓', label: 'Date', value: `${date}`, sub: '(Saturday)' },
                       { icon: '⏰', label: 'Time', value: '5:45 PM', sub: 'onwards' }
                     ].map((item, index) => (
                       <div key={index} className="text-center group">
