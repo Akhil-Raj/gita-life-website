@@ -431,7 +431,7 @@ export default function MonthlyYouthFestival() {
                     icon: '✨',
                     title: 'Spiritual Talk',
                     description:
-                      'Inspiring session by HG Jagannath Gopal Prabhu (Vice President at Goldman Sachs and dedicated bhakti yoga preacher at ISKCON 26 2nd Avenue)',
+                      'Inspiring session by HG Gaur Sharan Das (monk, spiritual teacher, and NYU chaplain sharing timeless bhakti wisdom)',
                     gradient: 'from-yellow-100 to-orange-100',
                     border: 'border-yellow-200'
                   },
