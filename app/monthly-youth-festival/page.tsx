@@ -483,7 +483,7 @@ export default function MonthlyYouthFestival() {
                     icon: '✨',
                     title: 'Spiritual Talk',
                     description:
-                      'Inspiring session by HG Tulsi Das — travelling monk, kirtan enthusiast, and beloved guide whose scriptural depth and heartfelt teachings have ignited bhakti in countless hearts.',
+                      'Inspiring session by Madana Gopala Prabhu — a beloved guide whose scriptural depth and heartfelt teachings have ignited bhakti in countless hearts.',
                     gradient: 'from-yellow-100 to-orange-100',
                     border: 'border-yellow-200'
                   },
