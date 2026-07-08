@@ -483,7 +483,7 @@ export default function MonthlyYouthFestival() {
                     icon: '✨',
                     title: 'Spiritual Talk',
                     description:
-                      'Inspiring session by Madana Gopala Prabhu — a beloved guide whose scriptural depth and heartfelt teachings have ignited bhakti in countless hearts.',
+                      'Inspiring session by Anupama Das Prabhu — a dedicated seeker and teacher whose journey to India at a young age and deep connection to the teachings of A. C. Bhaktivedanta Swami Prabhupada continue to inspire others through soulful outreach, transcendental literature, and a life rooted in devotion.',
                     gradient: 'from-yellow-100 to-orange-100',
                     border: 'border-yellow-200'
                   },
